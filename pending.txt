@@ -1,0 +1,11 @@
+pan application success message (modal)
+repan (duplicate pan application)(aadhaar and mobile crose chheck)
+
+pdf generator
+deleted pans(New and update) - permenantly delete and restore
+
+download all datas in sigle folder(new , update)
+
+admin register(old admin validation)
+new, update (photo submit error validation , require validation)
+
