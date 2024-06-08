@@ -397,4 +397,12 @@ if (isset($_POST['restore_delete_update_pan_per'])) {
 
 
 
+if (isset($_POST['delete_enquirey'])) {
+    $delete_enquirey_id = $_POST['delete_enquirey_id'];
+    $querys = new Database();
+    $querys->deleteDataFromenquiery($delete_enquirey_id);
+}
+
+
+
 ?>

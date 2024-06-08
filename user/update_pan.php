@@ -50,6 +50,10 @@
             color: green;
             font-weight: 700;
         }
+
+        .hiddens {
+            display: none;
+        }
     </style>
 </head>
 
@@ -151,18 +155,53 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+                    <div class="row gap-5 justify-content-center my-5">
+                        <div class="col-md-5 text-center p-2 border border-warning border-2">
+                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
+                            <div class="input-group mb-3">
+                                <input type="file" name="update_pan_aadhar_front" class="form-control form-control-lg"
+                                    id="aadharfront" accept="image/*" required>
+                            </div>
+                            <div class="border rounded-lg text-center p-3">
+                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
+                                    class="img-fluid" id="preview3" alt="Preview" />
+                            </div>
+                        </div>
+                        <div class="col-md-5 text-center p-2 border border-warning border-2">
+                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
+                            <div class="input-group mb-3">
+                                <input type="file" name="update_pan_aadhar_back" class="form-control form-control-lg"
+                                    id="aadharback" accept="image/*" required>
+                            </div>
+                            <div class="border rounded-lg text-center p-3">
+                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
+                                    class="img-fluid" id="preview4" alt="Preview" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
                     <div class="row justify-content-evenly my-5">
                         <div class="col-md-5 p-2 text-center border border-info my-1">
                             <span class="selector">Please upload photo</span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="upload" name="photoOption"
-                                        value="normal" onclick="showUploadInput('normal')">
+                                        value="normal" onclick="showUploadInput('normal')" required>
                                     <label class="form-check-label" for="upload">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="live" name="photoOption"
-                                        value="live" onclick="showUploadInput('live')">
+                                        value="live" onclick="showUploadInput('live')" required>
                                     <label class="form-check-label" for="live">Capture</label>
                                 </div>
                             </div>
@@ -205,12 +244,12 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="upsig" name="sign" value="normals"
-                                        onclick="showUploadInputSignature('normals')">
+                                        onclick="showUploadInputSignature('normals')" required>
                                     <label class="form-check-label" for="upsig">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="csign" name="sign" value="lives"
-                                        onclick="showUploadInputSignature('lives')">
+                                        onclick="showUploadInputSignature('lives')" required>
                                     <label class="form-check-label" for="csign">Capture</label>
                                 </div>
                             </div>
@@ -252,69 +291,43 @@
                     </div>
 
 
-
-
-
-
-                    <div class="row gap-5 justify-content-center my-5">
-                        <div class="col-md-5 text-center p-2 border border-warning border-2">
-                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
-                            <div class="input-group mb-3">
-                                <input type="file" name="update_pan_aadhar_front" class="form-control form-control-lg" id="aadharfront"
-                                    accept="image/*">
-                            </div>
-                            <div class="border rounded-lg text-center p-3">
-                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
-                                    class="img-fluid" id="preview3" alt="Preview" />
-                            </div>
-                        </div>
-                        <div class="col-md-5 text-center p-2 border border-warning border-2">
-                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
-                            <div class="input-group mb-3">
-                                <input type="file" name="update_pan_aadhar_back" class="form-control form-control-lg" id="aadharback"
-                                    accept="image/*">
-                            </div>
-                            <div class="border rounded-lg text-center p-3">
-                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
-                                    class="img-fluid" id="preview4" alt="Preview" />
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
                     <hr>
                     <h2 class="text-center text-warning">Correction details</h2>
 
+
+
                     <div class="text-center justify-content-center d-flex my-5">
                         <div class="mx-5">
-                            <input class="form-check-input" type="checkbox" id="yourNameCheckbox"
-                                onchange="toggleYourNameFields()" name="option1" value="something1">
-                            <label class="form-check-label selector" for="yourNameCheckbox">Your Name
+                            <label>
+                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox1"
+                                    onclick="toggleInput(this, 'inputs1')"> Your Name
                             </label>
                         </div>
                         <div class="mx-5">
-                            <input class="form-check-input" type="checkbox" id="fatherNameCheckbox"
-                                onchange="toggleFatherNameFields()" name="option2" value="something2">
-                            <label class="form-check-label selector" for="fatherNameCheckbox">Father Name
+                            <label>
+                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox2"
+                                    onclick="toggleInput(this, 'inputs2')"> Father Name
                             </label>
                         </div>
                         <div class="mx-5">
-                            <input class="form-check-input" type="checkbox" id="dobCheckbox"
-                                onchange="toggleDOBFields()" name="option3" value="something3">
-                            <label class="form-check-label selector" for="dobCheckbox">Date of Birth
+                            <label>
+                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox3"
+                                    onclick="toggleInput(this, 'inputs3')"> Date of Birth
                             </label>
                         </div>
                     </div>
-                    <div id="yourNameFields" style="display: none;">
+
+
+
+
+                    <div class="hiddens" id="inputs1">
                         <div class="row">
                             <span style="font-weight: 900;" class="selector">Name correction</span>
                             <div class="col-md-6 p-2">
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
                                         oninput="validateInput('firstName')" pattern="[a-zA-Z\s]+" id="firstName"
-                                        placeholder="Enter Full Name" name="update_firstName" required>
+                                        placeholder="Enter Full Name" name="update_firstName">
                                     <label for="firstName" class="text-secondary">Full Name</label>
                                 </div>
                             </div>
@@ -322,7 +335,7 @@
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
                                         oninput="validateInput('middleName')" pattern="[a-zA-Z\s]+" id="middleName"
-                                        placeholder="Enter Full Name" name="update_middleName" required>
+                                        placeholder="Enter Full Name" name="update_middleName">
                                     <label for="middleName" class="text-secondary">Middle Name</label>
                                 </div>
                             </div>
@@ -330,7 +343,7 @@
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
                                         oninput="validateInput('lastName')" pattern="[a-zA-Z\s]+" id="lastName"
-                                        placeholder="Enter Full Name" name="update_lastName" required>
+                                        placeholder="Enter Full Name" name="update_lastName">
                                     <label for="lastName" class="text-secondary">Last Name</label>
                                 </div>
                             </div>
@@ -343,14 +356,14 @@
                             </div>
                         </div>
                     </div>
-                    <div id="fatherNameFields" style="display: none;">
+                    <div class="hiddens" id="inputs2">
                         <div class="row my-5">
                             <span style="font-weight: 900;" class="selector">Father's Name</span>
                             <div class="col-md-6 p-2">
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
                                         oninput="validateInput('fatherName')" pattern="[a-zA-Z\s]+" id="fatherName"
-                                        placeholder="Enter Full Name" name="update_fatherName" required>
+                                        placeholder="Enter Full Name" name="update_fatherName">
                                     <label for="firstName" class="text-secondary">Father's Name</label>
                                 </div>
                             </div>
@@ -363,7 +376,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="dobFields" style="display: none;">
+                    <div class="hiddens" id="inputs3">
                         <div class="row my-5">
                             <span style="font-weight: 900;" class="selector">Date Of Birth</span>
                             <div class="col-md-6 p-2">
@@ -382,6 +395,9 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="text-center" id="final" style="display: block;">
                         <input class="form-check-input" type="checkbox" id="confirm" name="option1" value="something"
                             required>
@@ -396,7 +412,7 @@
                         <input type="submit" name="update_pan_submit" class="btn btn-outline-success rounded-0"
                             value="Submit the Document">
                     </div>
-                </form>
+                    </>
             </div>
         </div>
     </div>
@@ -404,6 +420,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+
+
+
+        function toggleInput(checkbox, inputDivId) {
+            const inputDiv = document.getElementById(inputDivId);
+            const inputFields = inputDiv.querySelectorAll('input[type="text"], input[type="file"], input[type="date"]');
+            if (checkbox.checked) {
+                inputDiv.classList.remove('hiddens');
+                inputFields.forEach(inputField => {
+                    inputField.setAttribute('required', 'required');
+                });
+            } else {
+                inputDiv.classList.add('hiddens');
+                inputFields.forEach(inputField => {
+                    inputField.removeAttribute('required');
+                });
+            }
+        }
+
+
 
         function showUploadInput(type) {
             if (type === 'normal') {
@@ -475,7 +511,7 @@
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#preview').attr('src', e.target.result); 
+                        $('#preview').attr('src', e.target.result);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -565,9 +601,11 @@
         var signaturePad = new SignaturePad(canvas);
         var signatureInput = document.getElementById('signature_input');
         function clearSignature() {
+            event.preventDefault();
             signaturePad.clear();
         }
         function saveSignature() {
+            event.preventDefault();
             if (signaturePad.isEmpty()) {
                 alert("Please provide a signature first.");
             } else {
@@ -604,6 +642,7 @@
                 console.error("An error occurred: " + err);
             });
         function takeSnapshotCustom() {
+            event.preventDefault();
             contextCustom.drawImage(videoCustom, 0, 0, canvasCustom.width, canvasCustom.height);
             const dataUriCustom = canvasCustom.toDataURL('image/jpeg');
             document.getElementById('update_profile_Picture').value = dataUriCustom;
@@ -647,25 +686,27 @@
             fileUploadContainer.style.display = this.checked ? 'block' : 'none';
         });
 
-        function toggleYourNameFields() {
-            var yourNameFields = document.getElementById('yourNameFields');
-            yourNameFields.style.display = document.getElementById('yourNameCheckbox').checked ? 'block' : 'none';
-        }
+        // function toggleYourNameFields() {
+        //     var yourNameFields = document.getElementById('yourNameFields');
+        //     yourNameFields.style.display = document.getElementById('yourNameCheckbox').checked ? 'block' : 'none';
+        // }
 
-        function toggleFatherNameFields() {
-            var fatherNameFields = document.getElementById('fatherNameFields');
-            fatherNameFields.style.display = document.getElementById('fatherNameCheckbox').checked ? 'block' : 'none';
-        }
+        // function toggleFatherNameFields() {
+        //     var fatherNameFields = document.getElementById('fatherNameFields');
+        //     fatherNameFields.style.display = document.getElementById('fatherNameCheckbox').checked ? 'block' : 'none';
+        // }
 
-        function toggleAddressFields() {
-            var addressFields = document.getElementById('addressFields');
-            addressFields.style.display = document.getElementById('addressCheckbox').checked ? 'block' : 'none';
-        }
+        // function toggleDOBFields() {
+        //     var dobFields = document.getElementById('dobFields');
+        //     dobFields.style.display = document.getElementById('dobCheckbox').checked ? 'block' : 'none';
+        // }
 
-        function toggleDOBFields() {
-            var dobFields = document.getElementById('dobFields');
-            dobFields.style.display = document.getElementById('dobCheckbox').checked ? 'block' : 'none';
-        }
+        // function toggleAddressFields() {
+        //     var addressFields = document.getElementById('addressFields');
+        //     addressFields.style.display = document.getElementById('addressCheckbox').checked ? 'block' : 'none';
+        // }
+
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

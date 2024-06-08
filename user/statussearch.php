@@ -8,7 +8,7 @@ if (isset($_POST['user_statuss'])) {
     $sel_user_status_update = $querys->search_user_status_update($status_search_recept);
 
     if (!$sel_user_status_new && !$sel_user_status_update) {
-        $login_error_message = 'Incorrect mobile number';
+        $login_error_message = 'Incorrect Recept number';
     }
 }
 

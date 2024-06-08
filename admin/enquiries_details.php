@@ -33,8 +33,8 @@ $fetched_all_enquiry_reg = $querys->sel_enquiry_all_data();
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Teko:wght@300..700&display=swap"
         rel="stylesheet">
-        <style>
-        body{
+    <style>
+        body {
             font-family: "Bree Serif", serif;
         }
     </style>
@@ -63,10 +63,10 @@ $fetched_all_enquiry_reg = $querys->sel_enquiry_all_data();
                         <span class="nav_name">Update Pan</span> </a>
                     <!-- <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span
                             class="nav_name">Bookmark</span></a> -->
-                     <a href="#" class="nav_link active"><i class='bx bx-comment-dots' style="font-size: 20px;"></i><span
+                    <a href="#" class="nav_link active"><i class='bx bx-comment-dots' style="font-size: 20px;"></i><span
                             class="nav_name">Enquiries</span> </a>
-                    <a href="admin.php" class="nav_link"> <i style="font-size: 28px;" class='bx bx-user-check '></i> <span
-                            class="nav_name">ADMIN</span> </a>
+                    <a href="admin.php" class="nav_link"> <i style="font-size: 28px;" class='bx bx-user-check '></i>
+                        <span class="nav_name">ADMIN</span> </a>
                 </div>
             </div> <a href="adminlogout.php" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
                     class="nav_name">SignOut</span> </a>
@@ -75,7 +75,7 @@ $fetched_all_enquiry_reg = $querys->sel_enquiry_all_data();
 
 
     <div class="container-fluid" style="margin-top: 100px;">
-    <span class=""><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
+        <span class=""><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
                 BACK</a></span>
         <section>
             <div class="card" style="border-radius: 0%;">
@@ -91,9 +91,10 @@ $fetched_all_enquiry_reg = $querys->sel_enquiry_all_data();
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    <th>Description</th>
+                                    <th>Message</th>
                                     <th>Register Date</th>
-                                    <th>action</th>
+                                    <th>MAIL</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
@@ -107,7 +108,15 @@ $fetched_all_enquiry_reg = $querys->sel_enquiry_all_data();
                                             <td><?php echo $contact_reg_row['enquiry_reg_mobile']; ?></td>
                                             <td><?php echo $contact_reg_row['enquiry_reg_description']; ?></td>
                                             <td><?php echo $contact_reg_row['enquiry_reg_created_at']; ?></td>
-                                            <td> action</td>
+                                            <td> Mail</td>
+                                            <td>
+                                                <form action="../forms_datas.php" method="post">
+                                                    <input type="hidden" name="delete_enquirey_id"
+                                                        value="<?php echo $contact_reg_row['enquiry_reg_id']; ?>">
+                                                    <input type="submit" value="Delete" name="delete_enquirey"
+                                                        class="btn btn-danger rounded-0 btn-sm">
+                                                </form>
+                                            </td>
                                         </tr>
                                     <?php }
                                     } else {

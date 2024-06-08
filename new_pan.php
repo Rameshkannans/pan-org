@@ -171,7 +171,7 @@
                         <div class="col-md-6 p-2">
                             <div class="form-floating mb-3 mt-3">
                                 <input type="date" class="form-control border-info rounded-0" id="dob"
-                                    placeholder="Enter Date of Birth" name="new_pan_dob" onchange="checkAge();" required>
+                                    placeholder="Enter Date of Birth" name="new_pan_dob" onchange="checkAge()" required>
                                 <label for="dob" class="text-secondary">Date Of Birth</label>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                             style="display: none;">
                             <span class="selector">You are the minor, Please provide the parent's photo and
                                 signature</span>
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center ">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="fatherRadio" name="new_choose_fm"
                                         value="father" onchange="checkGender()">
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="motherRadio" name="new_choose_fm"
-                                        value="mother" nchange="checkGender()">
+                                        value="option2" nchange="checkGender()">
                                     <label class="form-check-label" for="motherRadio">Mother</label>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="fmsigup" name="uploadTypeSignature"
-                                        value="fnormals" onclick="fshowUploadInputSignature('fnormals')" checked>
+                                        value="fnormals" onclick="fshowUploadInputSignature('fnormals')">
                                     <label class="form-check-label" for="fmsigup">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
@@ -297,7 +297,7 @@
                                 </div>
                             </div>
 
-
+                            
                             <div id="fnormalUploads" style="display: none;">
                                 <div class="row">
                                     <label for="signatureImageUploadfm" class="fs-5 mb-3 exlabel text-info">Upload
@@ -338,12 +338,6 @@
 
 
 
-
-
-
-
-
-
                         <!-- <div class="col-md-5 p-2 text-center border border-warning my-1" id="fileUploadFieldsl"
                             style="display: none;">
                             <div class="form mt-3 mb-3">
@@ -371,18 +365,16 @@
                             <span class="selector">Select Gender</span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="male" name="gender" value="male"
-                                        required>
+                                    <input type="radio" class="form-check-input" id="male" name="gender" value="male">
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="female" name="gender"
-                                        value="female" required>
+                                        value="female">
                                     <label class="form-check-label" for="female">Female</label>
                                 </div>
                                 <div class="form-check mx-4">
-                                    <input type="radio" class="form-check-input" id="other" name="gender" value="other"
-                                        required>
+                                    <input type="radio" class="form-check-input" id="other" name="gender" value="other">
                                     <label class="form-check-label" for="other">Others</label>
                                 </div>
                             </div>
@@ -417,7 +409,7 @@
                             <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="new_pan_aadhar_front" class="form-control form-control-lg"
-                                    id="aadharfront" accept="image/*" required>
+                                    id="aadharfront" accept="image/*">
                             </div>
                             <div class="border rounded-lg text-center p-3">
                                 <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
@@ -428,7 +420,7 @@
                             <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="new_pan_aadhar_back" class="form-control form-control-lg"
-                                    id="aadharback" accept="image/*" required>
+                                    id="aadharback" accept="image/*">
                             </div>
                             <div class="border rounded-lg text-center p-3">
                                 <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
@@ -446,12 +438,12 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="proup" name="uploadType"
-                                        value="normal" onclick="showUploadInput('normal')" required>
+                                        value="normal" onclick="showUploadInput('normal')">
                                     <label class="form-check-label" for="proup">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="proupc" name="uploadType"
-                                        value="live" onclick="showUploadInput('live')" required>
+                                        value="live" onclick="showUploadInput('live')">
                                     <label class="form-check-label" for="proupc">Capture</label>
                                 </div>
                             </div>
@@ -492,13 +484,13 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="prosign" name="uploadTypeSignature"
-                                        value="normals" onclick="showUploadInputSignature('normals')" required>
+                                        value="normals" onclick="showUploadInputSignature('normals')">
                                     <label class="form-check-label" for="prosign">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
                                     <input type="radio" class="form-check-input" id="prosignc"
                                         name="uploadTypeSignature" value="lives"
-                                        onclick="showUploadInputSignature('lives')" required>
+                                        onclick="showUploadInputSignature('lives')">
                                     <label class="form-check-label" for="prosignc">Capture</label>
                                 </div>
                             </div>
@@ -567,8 +559,6 @@
 
 
     <script>
-
-
         // function fshowUploadInput(type) {
         //     if (type === 'fnormal') {
         //         document.getElementById('fnormalUpload').style.display = 'block';
@@ -586,7 +576,6 @@
         //         document.getElementById('profilePictureUploadfm').removeAttribute('required');
         //     }
         // }
-
 
         function fshowUploadInputSignature(type) {
             if (type === 'fnormals') {
@@ -654,21 +643,15 @@
 
             if (age < 18) {
                 document.getElementById('fileUploadFields').style.display = 'block';
-                document.getElementById("fatherRadio").setAttribute("required", "required");
-                document.getElementById("motherRadio").setAttribute("required", "required");
-                fshowUploadInputSignature('fnormals');
             } else {
                 document.getElementById('fileUploadFields').style.display = 'none';
             }
 
             if (age < 18) {
                 document.getElementById('fileUploadFieldss').style.display = 'block';
-                document.getElementById("fmsigup").setAttribute("required", "required");
-                document.getElementById("fmsigupc").setAttribute("required", "required");
             } else {
                 document.getElementById('fileUploadFieldss').style.display = 'none';
             }
-
 
             if (age < 18) {
                 const inputDivf = document.getElementById('fileUploadFieldslaf');

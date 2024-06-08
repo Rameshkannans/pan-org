@@ -586,6 +586,22 @@ class Database
 
 
 
+    public function deleteDataFromenquiery($delete_enquirey_id)
+    {
+        $sql = "DELETE FROM enquiry_register WHERE enquiry_reg_id ='$delete_enquirey_id'";
+        $result = $this->conn->query($sql);
+        if ($result) {
+            if (!headers_sent()) {
+                header('Location: admin/enquiries_details.php');
+                exit();
+            } else {
+                echo "Error: Headers already sent";
+            }
+        } else {
+            echo "Error: " . $sql . "<br>" . $this->conn->error;
+        }
+    }
+
 
 
 

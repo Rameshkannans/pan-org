@@ -311,7 +311,7 @@
                             <div class="form-floating">
                                 <textarea class="form-control" id="enquiry_description" name="enquiry_description"
                                     placeholder="Enter your Description" required></textarea>
-                                <label for="enquiry_description" class="text-secondary">Description</label>
+                                <label for="enquiry_description" class="text-secondary">Message</label>
                             </div>
                             <button type="submit" class="btn btn-primary my-3 px-5 fw-bold mx-auto d-flex"
                                 name="enquiry_data_submit">Submit</button>
