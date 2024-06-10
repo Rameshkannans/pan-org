@@ -103,7 +103,7 @@ $fetched_deleted_new_pan = $querys->select_deleted_new_pan_data();
 
 
     <div class="container-fluid" style="margin-top: 100px;">
-        <span class=""><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
+        <span class="d-flex justify-content-end"><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
                 BACK</a></span>
         <section>
             <div class="card" style="border-radius: 0%;">
@@ -122,14 +122,14 @@ $fetched_deleted_new_pan = $querys->select_deleted_new_pan_data();
                                     <th>Aadhar</th>
                                     <th>Mobile</th>
                                     <th>Gender</th>
-                                    <th>Father</th>
+                                    <!-- <th>Father</th> -->
                                     <th>Aadhar DOC</th>
                                     <th>Profile</th>
                                     <th>Sign</th>
                                     <th>DOB</th>
-                                    <th>F/M</th>
+                                    <!-- <th>F/M</th> -->
                                     <!-- <th>F/M P</th> -->
-                                    <th>F/M S</th>
+                                    <!-- <th>F/M S</th>   -->
                                     <th>Old Reg.Date</th>
                                     <th>Del.Reg.Date</th>
                                     <th>Restore</th>
@@ -148,7 +148,7 @@ $fetched_deleted_new_pan = $querys->select_deleted_new_pan_data();
                                             <td><?php echo $del_new_pan_row['deleted_new_aadhaar_number']; ?></td>
                                             <td><?php echo $del_new_pan_row['deleted_new_mobile_number']; ?></td>
                                             <td><?php echo $del_new_pan_row['deleted_new_gender']; ?></td>
-                                            <td><?php echo $del_new_pan_row['deleted_new_call_pan_father']; ?></td>
+                                            <!-- <td><?php echo $del_new_pan_row['deleted_new_call_pan_father']; ?></td> -->
                                             <td><a class="btn btn-outline-success rounded-0 btn-sm"
                                                     href="../<?php echo $del_new_pan_row['deleted_new_aadhaar_doc']; ?>"
                                                     target="_blank">Download Aadhaar</a></td>
@@ -160,13 +160,13 @@ $fetched_deleted_new_pan = $querys->select_deleted_new_pan_data();
                                                     style="width: 70px; height: 60px;"></td>
 
                                             <td><?php echo $del_new_pan_row['deleted_new_pan_dob']; ?></td>
-                                            <td><?php echo $del_new_pan_row['deleted_new_parent']; ?></td>
+                                            <!-- <td><?php echo $del_new_pan_row['deleted_new_parent']; ?></td> -->
                                             <!-- <td><img src="../<?php echo $del_new_pan_row['deleted_new_fm_profile_picture']; ?>"
                                                     alt="Profile Photo" class="img-fluid rounded-1 my-2 "
                                                     style="width: 70px; height: 60px;"></td> -->
-                                            <td><img src="../<?php echo $del_new_pan_row['deleted_new_fm_signature_picture']; ?>"
+                                            <!-- <td><img src="../<?php echo $del_new_pan_row['deleted_new_fm_signature_picture']; ?>"
                                                     alt="Profile Photo" class="img-fluid rounded-1 my-2 "
-                                                    style="width: 70px; height: 60px;"></td>
+                                                    style="width: 70px; height: 60px;"></td> -->
                                             <td><?php echo $del_new_pan_row['deleted_new_created_at']; ?></td>
                                             <td><?php echo $del_new_pan_row['deleted_new_pan_created_at']; ?></td>
                                             <td>

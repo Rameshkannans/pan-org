@@ -102,7 +102,7 @@ $fetched_deleted_update_pan = $db->select_deleted_update_pan_data();
 
 
     <div class="container-fluid" style="margin-top: 100px;">
-        <span class=""><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
+        <span class="d-flex justify-content-end"><a href="index.php" class="btn btn-danger btn-sm rounded-0"><i class='bx bx-arrow-back'></i>
                 BACK</a></span>
         <section>
             <div class="card" style="border-radius: 0%;">

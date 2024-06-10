@@ -405,4 +405,91 @@ if (isset($_POST['delete_enquirey'])) {
 
 
 
+
+$sourceFolders = [
+    'D:/software/xampp/htdocs/card/newpanaadhar/',
+    'D:/software/xampp/htdocs/card/newpandocx/',
+    'D:/software/xampp/htdocs/card/newpanimage/',
+    'D:/software/xampp/htdocs/card/newpanparentaadhar'
+];
+$destinationFolder = 'D:/software/xampp/htdocs/card/Downloaded/New Pan Card/';
+if (isset($_POST['download'])) {
+    $recept = $_POST['recept'];
+    $name = $_POST['name'];
+    $filenames = explode(',', $_POST['filenames']);
+    $filesFound = [];
+    $uniqueFolderName = $destinationFolder .$name.' '.$recept. '/';
+    if (!file_exists($uniqueFolderName)) {
+        mkdir($uniqueFolderName, 0777, true);
+    }
+    foreach ($filenames as $filename) {
+        $filename = trim($filename);
+        $fileFound = false;
+        foreach ($sourceFolders as $sourceFolder) {
+            if (file_exists($sourceFolder . $filename)) {
+                $fileFound = true;
+                $destinationFilePath = $uniqueFolderName . $filename;
+                copy($sourceFolder . $filename, $destinationFilePath);
+                $filesFound[] = $filename;
+                break;
+            }
+            header('Location: admin/rec_new_pan.php');
+        }
+        if (!$fileFound) {
+            echo "File not found: " . $filename . "<br>";
+        }
+    }
+    // if (!empty($filesFound)) {
+    //     echo "Files downloaded successfully to " . $uniqueFolderName . "<br>";
+    //     echo "Downloaded files: " . implode(", ", $filesFound);
+    // } else {
+    //     echo "No files were downloaded.";
+    // }    
+}
+
+
+
+
+
+$sourceFoldersUpdate = [
+    'D:/software/xampp/htdocs/card/updatepanaadhar/',
+    'D:/software/xampp/htdocs/card/updatepandocx/',
+    'D:/software/xampp/htdocs/card/updatepanimage/'
+];
+$destinationFolderUpdate = 'D:/software/xampp/htdocs/card/Downloaded/Update Pan Card/';
+if (isset($_POST['downloadUpdate'])) {
+    $recept = $_POST['recept'];
+    $name = $_POST['name'];
+    $filenames = explode(',', $_POST['filenames']);
+    $filesFound = [];
+    $uniqueFolderName = $destinationFolderUpdate .$name.' '.$recept. '/';
+    if (!file_exists($uniqueFolderName)) {
+        mkdir($uniqueFolderName, 0777, true);
+    }
+    foreach ($filenames as $filename) {
+        $filename = trim($filename);
+        $fileFound = false;
+        foreach ($sourceFoldersUpdate as $sourceFolder) {
+            if (file_exists($sourceFolder . $filename)) {
+                $fileFound = true;
+                $destinationFilePath = $uniqueFolderName . $filename;
+                copy($sourceFolder . $filename, $destinationFilePath);
+                $filesFound[] = $filename;
+                break;
+            }
+            header('Location: admin/rec_update_pan.php');
+        }
+        if (!$fileFound) {
+            echo "File not found: " . $filename . "<br>";
+        }
+    }
+    // if (!empty($filesFound)) {
+    //     echo "Files downloaded successfully to " . $uniqueFolderName . "<br>";
+    //     echo "Downloaded files: " . implode(", ", $filesFound);
+    // } else {
+    //     echo "No files were downloaded.";
+    // }    
+}
+
+
 ?>

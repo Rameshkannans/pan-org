@@ -94,7 +94,7 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
     </div>
 
     <div class="container-fluid" style="margin-top: 100px;">
-        <span class=""><a href="rec_update_pan.php" class="btn btn-danger btn-sm rounded-0"><i
+        <span class="d-flex justify-content-end"><a href="rec_update_pan.php" class="btn btn-danger btn-sm rounded-0"><i
                     class='bx bx-arrow-back'></i>
                 BACK</a></span>
         <div class="card" style="border-radius: 0%;">
@@ -165,7 +165,7 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
                                     href="../<?php echo $fetched_update_pan_id['update_signature']; ?>"
                                     target="_blank"><i class='bx bxs-image-alt'></i></a>
                             </div>
-                            <div class="col-md-5 d-flex align-items-center justify-content-center">
+                            <div class="col-md-4 d-flex align-items-center justify-content-end">
                                 <a class="btn btn-outline-primary" style="border-radius: 0%;"
                                     href="../<?php echo $fetched_update_pan_id['update_oldpan_doc']; ?>"
                                     target="_blank">
@@ -177,34 +177,10 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
                                     target="_blank">
                                     Aadhaar <i class='bx bx-download'></i></a>
                             </div> -->
-                            <div class="col-md-5 shadow d-flex align-items-center justify-content-center">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-3 d-flex align-items-center justify-content-center">
-                                        <a class="btn btn-outline-primary" style="border-radius: 0%;"
-                                            href="../<?php echo $fetched_update_pan_id['update_name_proof']; ?>"
-                                            target="_blank">
-                                            Name Proof <i class='bx bx-download'></i></a>
-                                    </div>
-                                    <div class="col-md-7 p-4 ">
-                                        <div class="row">
-                                            <div class="col-md-12 ps-5 my-1">
-                                                <span style="font-weight: 900;">F.
-                                                    Name:
-                                                </span><span><?php echo $fetched_update_pan_id['update_first_name']; ?></span>
-                                            </div>
-                                            <div class="col-md-12 ps-5 my-1">
-                                                <span style="font-weight: 900;">M.
-                                                    Name:
-                                                </span><span><?php echo $fetched_update_pan_id['update_middle_name']; ?></span>
-                                            </div>
-                                            <div class="col-md-12 ps-5 my-1">
-                                                <span style="font-weight: 900;">L.
-                                                    Name:
-                                                </span><span><?php echo $fetched_update_pan_id['update_lastname']; ?></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                                <span style="font-weight: 900;" class="me-2">
+                                    Aadhaar NO.:
+                                </span><span><?php echo $fetched_update_pan_id['update_aadhaar_number']; ?></span>
                             </div>
 
                         </div>
@@ -249,48 +225,80 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-12 col-sm-12 bgs p-2 bg-opacity-50">
-                        <div class="row p-2 shadow">
-                            <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
-                                <span style="font-weight: 900;" class="me-2">
-                                    Aadhaar NO.:
-                                </span><span><?php echo $fetched_update_pan_id['update_aadhaar_number']; ?></span>
-                            </div>
-                            <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
-                                <a class="btn btn-outline-primary" style="border-radius: 0%;"
-                                    href="../<?php echo $fetched_update_pan_id['update_fathername_proof']; ?>"
-                                    target="_blank">
-                                    Father Name Proof <i class='bx bx-download'></i></a>
-                            </div>
-                            <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
-                                <span style="font-weight: 900;" class="me-2">
-                                    Father Name:
-                                </span><span><?php echo $fetched_update_pan_id['update_father_name']; ?></span>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="row justify-content-center">
-                    <div class="col-md-12 col-sm-12 bgs p-2 bg-opacity-50">
-                        <div class="row p-2 shadow">
-                            <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
-                                <a class="btn btn-outline-primary" style="border-radius: 0%;"
-                                    href="../<?php echo $fetched_update_pan_id['update_dob_proof']; ?>" target="_blank">
-                                    DOB Proof <i class='bx bx-download'></i></a>
-                            </div>
-                            <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
-                                <span style="font-weight: 900;" class="me-2">
-                                    DOB:
-                                </span><span><?php echo $fetched_update_pan_id['update_dob']; ?></span>
+                <?php if (isset($fetched_update_pan_id['update_first_name']) && !empty($fetched_update_pan_id['update_first_name'])): ?>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-sm-12 bgs p-2 bg-opacity-50">
+                            <div class="row p-2 shadow">
+                                <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
+                                    <a class="btn btn-outline-primary" style="border-radius: 0%;"
+                                        href="../<?php echo htmlspecialchars($fetched_update_pan_id['update_name_proof'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        target="_blank">
+                                        Name Proof <i class='bx bx-download'></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
+                                    <span class="me-2" style="font-weight: 900;">F. Name:</span>
+                                    <span><?php echo htmlspecialchars($fetched_update_pan_id['update_first_name'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                </div>
+                                <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
+                                    <span class="me-2" style="font-weight: 900;">M. Name:</span>
+                                    <span><?php echo htmlspecialchars($fetched_update_pan_id['update_middle_name'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                </div>
+                                <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
+                                    <span class="me-2" style="font-weight: 900;">L. Name:</span>
+                                    <span><?php echo htmlspecialchars($fetched_update_pan_id['update_lastname'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
+
+
+                <?php if (!isset($fetched_update_pan_id['update_dob']) || $fetched_update_pan_id['update_dob'] != "0000-00-00"): ?>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-sm-12 bgs p-2 bg-opacity-50">
+                            <div class="row p-2 shadow">
+                                <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
+                                    <a class="btn btn-outline-primary" style="border-radius: 0%;"
+                                        href="../<?php echo htmlspecialchars($fetched_update_pan_id['update_dob_proof'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        target="_blank">
+                                        DOB Proof <i class='bx bx-download'></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
+                                    <span style="font-weight: 900;" class="me-2">DOB:</span>
+                                    <span><?php echo htmlspecialchars($fetched_update_pan_id['update_dob'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+
+
+
+                <?php if (isset($fetched_update_pan_id['update_father_name']) && !empty($fetched_update_pan_id['update_father_name'])): ?>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-sm-12 bgs p-2 bg-opacity-50">
+                            <div class="row p-2 shadow">
+                                <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
+                                    <a class="btn btn-outline-primary" style="border-radius: 0%;"
+                                        href="../<?php echo htmlspecialchars($fetched_update_pan_id['update_fathername_proof'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        target="_blank">
+                                        Father Name Proof <i class='bx bx-download'></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 p-5 d-flex align-items-center justify-content-center">
+                                    <span style="font-weight: 900;" class="me-2">Father Name:</span>
+                                    <span><?php echo htmlspecialchars($fetched_update_pan_id['update_father_name'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
 
                 <hr />
 
@@ -305,29 +313,111 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
 
 
 
+    <?php
+    $filePaths = [
+        'update_profile_picture' => $fetched_update_pan_id['update_profile_picture'],
+        'update_signature' => $fetched_update_pan_id['update_signature'],
+        'update_pan_aadhar_front' => $fetched_update_pan_id['update_pan_aadhar_front'],
+        'update_pan_aadhar_back' => $fetched_update_pan_id['update_pan_aadhar_back'],
+        'update_name_proof' => $fetched_update_pan_id['update_name_proof'],
+        'update_dob_proof' => $fetched_update_pan_id['update_dob_proof'],
+        'update_fathername_proof' => $fetched_update_pan_id['update_fathername_proof']
+    ];
+    $baseNames = [];
+    foreach ($filePaths as $key => $path) {
+        $baseNames[$key] = basename($path);
+    }
+    ?>
 
 
-
-    <div class="my-5">
+    <div class="my-5 d-flex gap-5">
         <button class="btn btn-danger p-2" id="printButton">Print Details</button>
+        <form method="post" action="../forms_datas.php">
+            <input type="hidden" name="recept" value="<?php echo $fetched_update_pan_id['update_pan_receipt_number']; ?>">
+            <input type="hidden" name="name" value="<?php echo  $fetched_update_pan_id['update_call_name']; ?>">
+            <input type="hidden" name="filenames" value="<?php echo implode(', ', $baseNames); ?>">
+            <button type="submit" class="btn btn-warning p-2" name="downloadUpdate">Download Datas</button>
+        </form>
     </div>
 
     <div class="container" id="content" style="display: none;">
         <table class="table table-warning table-hover">
-            <thead>
-                <tr>
-                    <th>profile</th>
-                </tr>
-            </thead>
             <tbody>
                 <tr>
-                    <td>
-                        <img src="../<?php echo $fetched_update_pan_id['update_profile_picture']; ?>"
-                            alt="Profile Photo" class="img-fluid rounded-1 my-2 " style="width: 100px; height: 100px;">
-                    </td>
+                    <td colspan="4" class="fs-5 fw-4">APPLY UPDATE PAN CARD</td>
                 </tr>
+                <tr>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Profile Image:</span>
+                        <img src="../<?php echo $fetched_update_pan_id['update_profile_picture']; ?>"
+                            alt="Profile Photo" class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">ID: <?php echo $fetched_update_pan_id['update_pan_id']; ?></td>
+                    <td class="align-middle">Receipt: <?php echo $fetched_update_pan_id['update_pan_receipt_number']; ?>
+                    </td>
+                    <td class="align-middle">Name: <?php echo $fetched_update_pan_id['update_call_name']; ?></td>
+                </tr>
+                <tr>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Signature:</span>
+                        <img src="../<?php echo $fetched_update_pan_id['update_signature']; ?>" alt="Signature Photo"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">Old PAN NO: <?php echo $fetched_update_pan_id['update_oldpan_number']; ?>
+                    </td>
+                    <td class="align-middle">Phone: <?php echo $fetched_update_pan_id['update_mobile_number']; ?></td>
+                    <td class="align-middle">Aadhar: <?php echo $fetched_update_pan_id['update_aadhaar_number']; ?></td>
+                </tr>
+                <tr>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Aadhar Front:</span>
+                        <img src="../<?php echo $fetched_update_pan_id['update_pan_aadhar_front']; ?>"
+                            alt="Aadhar Front" class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="">
+                        <span class="me-3">Candidate Aadhar Back:</span>
+                        <img src="../<?php echo $fetched_update_pan_id['update_pan_aadhar_back']; ?>" alt="Aadhar Back"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">Email: <?php echo $fetched_update_pan_id['update_email']; ?></td>
+                    <td colspan="1"></td>
+                </tr>
+
+                <?php if (isset($fetched_update_pan_id['update_first_name']) && !empty($fetched_update_pan_id['update_first_name'])): ?>
+                    <tr>
+                        <td colspan="4" class="fs-5 fw-4">Name Correction</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td class="align-middle">First Name: <?php echo $fetched_update_pan_id['update_first_name']; ?></td>
+                        <td class="align-middle">Middle Name: <?php echo $fetched_update_pan_id['update_middle_name']; ?>
+                        </td>
+                        <td class="align-middle">Last Name: <?php echo $fetched_update_pan_id['update_lastname']; ?></td>
+                        <td colspan="1"></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if (isset($fetched_update_pan_id['update_dob']) && !empty($fetched_update_pan_id['update_dob'])): ?>
+                    <tr>
+                        <td colspan="4" class="fs-5 fw-4">DOB Correction</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="4" class="align-middle">Date Of Birth:
+                            <?php echo $fetched_update_pan_id['update_dob']; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php if (isset($fetched_update_pan_id['update_father_name']) && !empty($fetched_update_pan_id['update_father_name'])): ?>
+                    <tr>
+                        <td colspan="4" class="fs-5 fw-4">Father's Name Correction</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="4" class="align-middle">Father Name:
+                            <?php echo $fetched_update_pan_id['update_father_name']; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
+
     </div>
 
 

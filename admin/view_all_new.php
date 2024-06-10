@@ -17,6 +17,7 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
     $admin_profile = $db->feth_admin_pro($ad_pro);
 }
 
+
 ?>
 
 
@@ -99,7 +100,7 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
     </div>
 
     <div class="container-fluid" style="margin-top: 100px;">
-        <span class=""><a href="rec_new_pan.php" class="btn btn-danger btn-sm rounded-0"><i
+        <span class="d-flex justify-content-end"><a href="rec_new_pan.php" class="btn btn-danger btn-sm rounded-0"><i
                     class='bx bx-arrow-back'></i>
                 BACK</a></span>
         <div class="card" style="border-radius: 0%;">
@@ -168,11 +169,11 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
                                     style="font-weight: 900;">Gender:</span><span><?php echo $fetched_new_pan_id['new_gender']; ?></span>
                             </div>
                             <?php if (isset($fetched_new_pan_id['new_pan_father']) && !empty($fetched_new_pan_id['new_pan_father'])) { ?>
-                            <div class="col-md-4 p-2 d-flex align-items-center justify-content-center">
-                                <span class="me-2" style="font-weight: 900;">Father
-                                    name:</span><span><?php echo $fetched_new_pan_id['new_pan_father']; ?></span>
-                            </div>
-                            <?php }?>
+                                <div class="col-md-4 p-2 d-flex align-items-center justify-content-center">
+                                    <span class="me-2" style="font-weight: 900;">Father
+                                        name:</span><span><?php echo $fetched_new_pan_id['new_pan_father']; ?></span>
+                                </div>
+                            <?php } ?>
                             <!-- <div class="col-md-3 p-2 d-flex align-items-center justify-content-center">
                                 <a class="btn btn-outline-primary" style="border-radius: 0%;"
                                     href="../<?php echo $fetched_new_pan_id['new_aadhaar_doc']; ?>" target="_blank">
@@ -217,7 +218,7 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
 
 
                         <div class="mx-5">
-                        <span class="mx-2" style="font-weight:700">Candidate Aadhar (Back):</span>
+                            <span class="mx-2" style="font-weight:700">Candidate Aadhar (Back):</span>
                             <img src="../<?php echo $fetched_new_pan_id['new_pan_aadhar_back']; ?>" alt="Profile Photo"
                                 class="img-fluid rounded-1 my-2 " style="width: 100px; height: 100px;">
                             <a class="btn btn-outline-warning bg-sm my-2 mx-2"
@@ -319,26 +320,99 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
         </div>
     </div>
 
-    <div class="my-5">
+  
+    <?php
+    $filePaths = [
+        'new_profile_picture' => $fetched_new_pan_id['new_profile_picture'],
+        'new_signature' => $fetched_new_pan_id['new_signature'],
+        'new_pan_aadhar_front' => $fetched_new_pan_id['new_pan_aadhar_front'],
+        'new_pan_aadhar_back' => $fetched_new_pan_id['new_pan_aadhar_back'],
+        'fm_new_pan_aadhar_front' => $fetched_new_pan_id['fm_new_pan_aadhar_front'],
+        'fm_new_pan_aadhar_back' => $fetched_new_pan_id['fm_new_pan_aadhar_back'],
+        'new_fm_signature_picture' => $fetched_new_pan_id['new_fm_signature_picture']
+    ];
+    $baseNames = [];
+    foreach ($filePaths as $key => $path) {
+        $baseNames[$key] = basename($path);
+    }
+    ?>
+    <div class="my-5 d-flex gap-5">
         <button class="btn btn-danger p-2" id="printButton">Print Details</button>
+        <form method="post" action="../forms_datas.php">
+            <input type="hidden" name="recept" value="<?php echo $fetched_new_pan_id['new_pan_receipt_number']; ?>">
+            <input type="hidden" name="name" value="<?php echo $fetched_new_pan_id['new_call_name']; ?>">
+            <input type="hidden" name="filenames" value="<?php echo implode(', ', $baseNames); ?>">
+            <button type="submit" class="btn btn-warning p-2" name="download">Download Datas</button>
+        </form>
     </div>
 
+
+
+
+
     <div class="container" id="content" style="display: none;">
-        <table class="table table-warning table-hover">
-            <thead>
-                <tr>
-                    <th>profile</th>
-                </tr>
-            </thead>
+        <table class="table table-warning table-hover table-striped">
             <tbody>
                 <tr>
-                    <td>
-                        <img src="../<?php echo $fetched_new_pan_id['new_profile_picture']; ?>" alt="Profile Photo"
-                            class="img-fluid rounded-1 my-2 " style="width: 100px; height: 100px;">
-                    </td>
+                    <td colspan="4" class="fs-5 fw-4">APPLY NEW PAN CARD</td>
                 </tr>
+                <tr>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Profile Image: </span>
+                        <img src="../<?php echo $fetched_new_pan_id['new_profile_picture']; ?>" alt="Profile Photo"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">ID: <?php echo $fetched_new_pan_id['new_pan_id']; ?></td>
+                    <td class="align-middle">Receipt: <?php echo $fetched_new_pan_id['new_pan_receipt_number']; ?></td>
+                    <td class="align-middle">Name: <?php echo $fetched_new_pan_id['new_call_name']; ?></td>
+                </tr>
+                <tr>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Signature Image: </span>
+                        <img src="../<?php echo $fetched_new_pan_id['new_signature']; ?>" alt="Profile Photo"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">Phone: <?php echo $fetched_new_pan_id['new_mobile_number']; ?></td>
+                    <td class="align-middle">Gender: <?php echo $fetched_new_pan_id['new_gender']; ?></td>
+                    <td class="align-middle">Aadhar: <?php echo $fetched_new_pan_id['new_aadhaar_number']; ?></td>
+                </tr>
+                <tr class="">
+                    <td class="d-flex align-items-center justify-content-center">
+                        <span class="me-3">Candidate Aadhar Front: </span>
+                        <img src="../<?php echo $fetched_new_pan_id['new_pan_aadhar_front']; ?>" alt="Profile Photo"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="">
+                        <span class="me-3">Candidate Aadhar Back: </span>
+                        <img src="../<?php echo $fetched_new_pan_id['new_pan_aadhar_back']; ?>" alt="Profile Photo"
+                            class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                    </td>
+                    <td class="align-middle">Email: <?php echo $fetched_new_pan_id['new_email']; ?></td>
+                    <td class="align-middle">Date of Birth: <?php echo $fetched_new_pan_id['new_pan_dob']; ?></td>
+                </tr>
+                <?php if (isset($fetched_new_pan_id['new_parent']) && !empty($fetched_new_pan_id['new_parent'])) { ?>
+                    <tr>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <span class="me-3">Parent Aadhar front: </span>
+                            <img src="../<?php echo $fetched_new_pan_id['fm_new_pan_aadhar_front']; ?>" alt="Profile Photo"
+                                class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                        </td>
+                        <td class="">
+                            <span class="me-3">Parent Aadhar Back: </span>
+                            <img src="../<?php echo $fetched_new_pan_id['fm_new_pan_aadhar_back']; ?>" alt="Profile Photo"
+                                class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                        </td>
+                        <td class="">
+                            <span class="me-3">Parent Signature: </span>
+                            <img src="../<?php echo $fetched_new_pan_id['new_fm_signature_picture']; ?>" alt="Profile Photo"
+                                class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                        </td>
+                        <td class="align-middle">Parent: <?php echo $fetched_new_pan_id['new_parent']; ?></td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
+
     </div>
 
 

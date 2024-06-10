@@ -102,15 +102,17 @@
 
 
             <div class="col-md-9 p-3  rounded-4 ">
-                <a href="../index.php"> <button class="btn btn-danger btn-sm mb-5">
-                        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            viewBox="0 0 1024 1024">
-                            <path
-                                d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
-                            </path>
-                        </svg>
-                        <span>Back</span>
-                    </button></a>
+                <div class="justify-content-end d-flex">
+                    <a href="../index.php"> <button class="btn btn-danger btn-sm mb-5">
+                            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                viewBox="0 0 1024 1024">
+                                <path
+                                    d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
+                                </path>
+                            </svg>
+                            <span>Back</span>
+                        </button></a>
+                </div>
                 <form action="../forms_datas.php" method="post" enctype="multipart/form-data">
 
 
@@ -171,7 +173,8 @@
                         <div class="col-md-6 p-2">
                             <div class="form-floating mb-3 mt-3">
                                 <input type="date" class="form-control border-info rounded-0" id="dob"
-                                    placeholder="Enter Date of Birth" name="new_pan_dob" onchange="checkAge();" required>
+                                    placeholder="Enter Date of Birth" name="new_pan_dob" onchange="checkAge();"
+                                    required>
                                 <label for="dob" class="text-secondary">Date Of Birth</label>
                             </div>
                         </div>
@@ -446,7 +449,7 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="proup" name="uploadType"
-                                        value="normal" onclick="showUploadInput('normal')" required>
+                                        value="normal" onclick="showUploadInput('normal')" required checked>
                                     <label class="form-check-label" for="proup">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
@@ -492,7 +495,7 @@
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="prosign" name="uploadTypeSignature"
-                                        value="normals" onclick="showUploadInputSignature('normals')" required>
+                                        value="normals" onclick="showUploadInputSignature('normals')" required checked>
                                     <label class="form-check-label" for="prosign">Upload</label>
                                 </div>
                                 <div class="form-check mx-4">
@@ -586,8 +589,8 @@
         //         document.getElementById('profilePictureUploadfm').removeAttribute('required');
         //     }
         // }
-
-
+        showUploadInput('normal');
+        showUploadInputSignature('normals');
         function fshowUploadInputSignature(type) {
             if (type === 'fnormals') {
                 document.getElementById('fnormalUploads').style.display = 'block';

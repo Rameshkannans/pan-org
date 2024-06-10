@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -210,8 +207,6 @@
         .bx.bxs-color {
             font-size: 24px;
         }
-
-
     </style>
 </head>
 
@@ -241,7 +236,8 @@
                         </span> Update Pan Card </a>
                     <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span
                             class="nav_name">Status</span>
-                    </a> <a href="user/contactus.php" class="nav_link"> <i class='bx bxs-contact' style="font-size: 20px;"></i><span class="nav_name">User
+                    </a> <a href="user/contactus.php" class="nav_link"> <i class='bx bxs-contact'
+                            style="font-size: 20px;"></i><span class="nav_name">User
                             Detials</span> </a>
 
                 </div>
@@ -260,12 +256,15 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-4 mb-4 mb-sm-0 d-flex">
                 <div class="card shadow d-flex flex-column justify-content-between">
-                    <img class="card-img-top" src="image/newpan.png" alt="Card image" style="width: 100%; height: auto;">
+                    <img class="card-img-top" src="image/newpan.png" alt="Card image"
+                        style="width: 100%; height: auto;">
                     <div class="card-body text-center">
                         <h4 class="card-title">NEW PAN</h4>
                         <p class="card-text">The PAN card is vital for identification, taxes, financial transactions,
                             accessing government benefits, and conducting business.</p>
-                        <a href="./user/new_pan.php" class="btn btn-primary mb-1 mt-1 btns">New Pan</a>
+                        <div class="d-grid">
+                            <a href="./user/new_pan.php" class="btn btn-outline-primary border-3 mb-1 mt-1">Apply New Pan</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -277,7 +276,9 @@
                         <h4 class="card-title">UPDATE PAN</h4>
                         <p class="card-text">You update your PAN card for personal changes, fixing errors, keeping it
                             valid, meeting rules, or adding security features.</p>
-                        <a href="./user/update_pan.php" class="btn btn-primary mb-1 mt-1 btns">Update Pan</a>
+                        <div class="d-grid">
+                            <a href="./user/update_pan.php" class="btn btn-outline-success border-3 mb-1 mt-1">Apply Update Pan</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,8 +289,10 @@
                         <h4 class="card-title">STATUS CHECK</h4>
                         <p class="card-text">You update your PAN card for personal changes, fixing errors, keeping it
                             valid, meeting rules, or adding security features.</p>
-                        <a href="./user/statussearch.php" class="btn btn-primary mb-1 mt-1 btns">Your Application
-                            Status</a>
+                        <div class="d-grid">
+                            <a href="./user/statussearch.php" class="btn btn-outline-warning border-3 mb-1 mt-1">Your Application
+                                Status</a>
+                        </div>
                     </div>
                 </div>
             </div>
