@@ -242,10 +242,16 @@
         textarea.form-control {
             height: 100px !important;
         }
+        .watermark {
+            background-image: url('../image/wa.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 
-<body id="body-pd">
+<body id="body-pd" class="watermark">
     <header class="header shadow" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <span style="font-weight: 900;" class="text-primary">Contact US</span>

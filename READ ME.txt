@@ -3,19 +3,22 @@
 *****DONT REMOVE ANY COMMANDED LINES*****
 
 
+add all file input unique name
+//watermark
+aadhar hidden *******12345
+//download documments in (automated download in download file)
+//camera frame
+frontend design
+
+//input heading
+//signature in mobile screen 
+//status checking
+favicon image 
 
 
+download form
+download datas in live
 
 
-
-pan application success message (modal)
-repan (duplicate pan application)(aadhaar and mobile crose chheck)
-
-pdf generator
-deleted pans(New and update) - permenantly delete and restore
-
-download all datas in sigle folder(new , update)
-
-admin register(old admin validation)
-new, update (photo submit error validation , require validation)
-
+female to father validation 
+sign validation

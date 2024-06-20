@@ -1,6 +1,7 @@
 <?php
 include 'server.php';
 // new pan card datas
+
 if (isset($_POST['new_pan_submit'])) {
 
     $new_call_name = $_POST['new_call_name'];
@@ -20,7 +21,7 @@ if (isset($_POST['new_pan_submit'])) {
         $new_fm_profile_folder = "newpanimage/" . $filename;
         file_put_contents($new_fm_profile_folder, $decodedImageData);
     } else {
-        $new_fm_profile_name = $_FILES['fm_new_profile_Picture']['name'];
+        $new_fm_profile_name = $_FILES['fm_new_profile_Picture']['name'] . substr(md5(uniqid() . random_int(0, 25)), 0, 6);
         $new_fm_profile_path = $_FILES['fm_new_profile_Picture']['tmp_name'];
         $new_fm_profile_folder = "newpanimage/" . $new_fm_profile_name;
         move_uploaded_file($new_fm_profile_path, $new_fm_profile_folder);
@@ -33,6 +34,10 @@ if (isset($_POST['new_pan_submit'])) {
         $new_fm_new_signature_folder = "newpanimage/" . $filenames;
         file_put_contents($new_fm_new_signature_folder, $decodedImageDatas);
     } else {
+        // $original_file_name = $_FILES['fm_new_signature_Image']['name'];
+        // $file_extension = pathinfo($original_file_name, PATHINFO_EXTENSION);
+        // $unique_string = $_FILES['fm_new_signature_Image']. substr(md5(uniqid() . random_int(0, 25)), 0, 6);
+        // $new_fm_signature_name = $unique_string . '.' . $file_extension;
         $new_fm_signature_name = $_FILES['fm_new_signature_Image']['name'];
         $new_fm_signature_path = $_FILES['fm_new_signature_Image']['tmp_name'];
         $new_fm_new_signature_folder = "newpanimage/" . $new_fm_signature_name;
@@ -412,16 +417,21 @@ $sourceFolders = [
     'D:/software/xampp/htdocs/card/newpanimage/',
     'D:/software/xampp/htdocs/card/newpanparentaadhar'
 ];
-$destinationFolder = 'D:/software/xampp/htdocs/card/Downloaded/New Pan Card/';
+
+$defaultDownloadFolder = getenv('USERPROFILE') . '/Downloads/';
+$destinationFolder = $defaultDownloadFolder . 'New Pan Card/';
+
 if (isset($_POST['download'])) {
     $recept = $_POST['recept'];
     $name = $_POST['name'];
     $filenames = explode(',', $_POST['filenames']);
     $filesFound = [];
-    $uniqueFolderName = $destinationFolder .$name.' '.$recept. '/';
+    $uniqueFolderName = $destinationFolder . $name . ' ' . $recept . '/';
+
     if (!file_exists($uniqueFolderName)) {
         mkdir($uniqueFolderName, 0777, true);
     }
+
     foreach ($filenames as $filename) {
         $filename = trim($filename);
         $fileFound = false;
@@ -433,19 +443,23 @@ if (isset($_POST['download'])) {
                 $filesFound[] = $filename;
                 break;
             }
-            header('Location: admin/rec_new_pan.php');
         }
+
         if (!$fileFound) {
             echo "File not found: " . $filename . "<br>";
         }
     }
-    // if (!empty($filesFound)) {
-    //     echo "Files downloaded successfully to " . $uniqueFolderName . "<br>";
-    //     echo "Downloaded files: " . implode(", ", $filesFound);
-    // } else {
-    //     echo "No files were downloaded.";
-    // }    
+
+    header('Location: admin/rec_new_pan.php');
+    exit();
 }
+// if (!empty($filesFound)) {
+//     echo "Files downloaded successfully to " . $uniqueFolderName . "<br>";
+//     echo "Downloaded files: " . implode(", ", $filesFound);
+// } else {
+//     echo "No files were downloaded.";
+// }    
+// }
 
 
 
@@ -456,13 +470,14 @@ $sourceFoldersUpdate = [
     'D:/software/xampp/htdocs/card/updatepandocx/',
     'D:/software/xampp/htdocs/card/updatepanimage/'
 ];
-$destinationFolderUpdate = 'D:/software/xampp/htdocs/card/Downloaded/Update Pan Card/';
+$defaultDownloadFolderU = getenv('USERPROFILE') . '/Downloads/';
+$destinationFolderUpdate = $defaultDownloadFolderU . 'Update Pan Card/';
 if (isset($_POST['downloadUpdate'])) {
     $recept = $_POST['recept'];
     $name = $_POST['name'];
     $filenames = explode(',', $_POST['filenames']);
     $filesFound = [];
-    $uniqueFolderName = $destinationFolderUpdate .$name.' '.$recept. '/';
+    $uniqueFolderName = $destinationFolderUpdate . $name . ' ' . $recept . '/';
     if (!file_exists($uniqueFolderName)) {
         mkdir($uniqueFolderName, 0777, true);
     }

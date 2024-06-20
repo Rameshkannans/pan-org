@@ -27,11 +27,11 @@
             display: none;
         }
 
-        #signature-pad {
+        .cansize {
             border: 2px solid #000;
         }
 
-        .selfie-container-custom {
+        /* .selfie-container-custom {
             border: 1px solid #ccc;
             display: flex;
             flex-direction: column;
@@ -44,6 +44,48 @@
 
         .canvas-element-custom {
             display: none;
+        } */
+
+
+        .selfie-container-custom {
+            border: 1px solid #ccc;
+            /* display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; */
+            border-radius: 50%;
+            overflow: hidden;
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .selfie-container-custom {
+                left: 10px;
+            }
+        }
+
+        .video-element-custom {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .canvas-element-custom {
+            display: none;
+        }
+
+        #resultsCustom {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #resultsCustom img {
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .selector {
@@ -54,10 +96,17 @@
         .hiddens {
             display: none;
         }
+
+        .watermark {
+            background-image: url('../image/wa.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 
-<body>
+<body class="watermark">
     <div class="container-fluid">
         <marquee behavior="scroll" direction="left"><span class="text-warning">Apply Update Pan Card in Easy Way</span>
         </marquee>
@@ -88,7 +137,7 @@
                             <div class="form mt-3 mb-3">
                                 <label for="oldpan" class="mb-2 selector">Upload old Pan Card</label>
                                 <input type="file" class="form-control border-info rounded-0" id="oldpan"
-                                    name="update_old_pan_doc" accept=".pdf,.doc,.docx" multiple required>
+                                    name="update_old_pan_doc" accept=".pdf" multiple required>
                             </div>
                         </div>
                         <div class="col-md-4 p-2 mt-3">
@@ -163,25 +212,27 @@
 
 
                     <div class="row gap-5 justify-content-center my-5">
-                        <div class="col-md-5 text-center p-2 border border-warning border-2">
+                        <div class="col-md-5 text-center p-2 rounded-4 border border-warning border-2">
                             <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="update_pan_aadhar_front" class="form-control form-control-lg"
-                                    id="aadharfront" accept="image/*" required>
+                                    id="aadharfront" accept="image/jpeg, image/jpg" required
+                                    onchange="previewImage(this,'imagePreviewf')">
                             </div>
-                            <div class="border rounded-lg text-center p-3">
-                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
+                            <div class="border rounded-lg text-center p-3" id="imagePreviewf" style="display: none;">
+                                <img src="https://via.placeholder.com/140?text=IMAGE" width="50%" height="50%"
                                     class="img-fluid" id="preview3" alt="Preview" />
                             </div>
                         </div>
-                        <div class="col-md-5 text-center p-2 border border-warning border-2">
-                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
+                        <div class="col-md-5 text-center p-2 rounded-4 border border-warning border-2">
+                            <h6 class="my-4 text-info">Upload Aadhar Back Side</h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="update_pan_aadhar_back" class="form-control form-control-lg"
-                                    id="aadharback" accept="image/*" required>
+                                    id="aadharback" accept="image/jpeg, image/jpg" required
+                                    onchange="previewImage(this,'imagePreviewb')">
                             </div>
-                            <div class="border rounded-lg text-center p-3">
-                                <img src="https://via.placeholder.com/140?text=IMAGE" width="20%" height="20%"
+                            <div class="border rounded-lg text-center p-3" id="imagePreviewb" style="display: none;">
+                                <img src="https://via.placeholder.com/140?text=IMAGE" width="50%" height="50%"
                                     class="img-fluid" id="preview4" alt="Preview" />
                             </div>
                         </div>
@@ -193,7 +244,7 @@
 
 
                     <div class="row justify-content-evenly my-5">
-                        <div class="col-md-5 p-2 text-center border border-info my-1">
+                        <div class="col-md-5 p-2 text-center rounded-4 border border-info my-1">
                             <span class="selector">Please upload photo</span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
@@ -215,33 +266,36 @@
                                         <div class="input-group mb-3">
                                             <input name="update_profile_Picture" type="file"
                                                 class="form-control form-control-lg" id="profilePictureUpload"
-                                                accept="image/*" required>
+                                                accept="image/jpeg, image/jpg*" required
+                                                onchange="previewImage(this,'imagePreviewp')">
                                         </div>
-                                        <div class="border rounded-lg text-center p-3">
-
-                                            <img src="https://via.placeholder.com/140?text=IMAGE" width="20%"
-                                                height="20%" class="img-fluid" id="preview" alt="Preview" />
+                                        <div class="border rounded-lg text-center p-3" id="imagePreviewp"
+                                            style="display: none;">
+                                            <img src="https://via.placeholder.com/140?text=IMAGE" width="50%"
+                                                height="50%" class="img-fluid" id="preview" alt="Preview" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="liveUpload" style="display: none;">
+                            <div id="liveUpload" style="display: none;" class="text-center">
                                 <h6 class="header3-custom text-warning">Take a selfie</h6>
-                                <div class="selfie-container-custom">
-                                    <video id="videoCustom" class="video-element-custom" width="320" height="240"
-                                        autoplay></video>
-                                    <canvas id="canvasCustom" class="canvas-element-custom" width="320"
-                                        height="240"></canvas>
+                                <div class="d-flex text-align-center justify-content-center">
+                                    <div class="selfie-container-custom">
+                                        <video id="videoCustom" class="video-element-custom " width="320" height="240"
+                                            autoplay></video>
+                                        <canvas id="canvasCustom" class="canvas-element-custom" width="320"
+                                            height="350"></canvas>
+                                    </div>
                                 </div>
-                                <div id="resultsCustom"></div>
                                 <div class="my-2">
                                     <button class="btn btn-warning btn-sm rounded-0" onclick="takeSnapshotCustom()">Take
                                         Snapshot</button>
                                 </div>
+                                <div id="resultsCustom"></div>
                                 <input type="hidden" id="update_profile_Picture" value="" accept="image/*">
                             </div>
                         </div>
-                        <div class="col-md-5 p-2 text-center border border-info my-1">
+                        <div class="col-md-5 p-2 text-center rounded-4 border border-info my-1">
                             <span class="selector">Please upload signature</span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
@@ -264,30 +318,30 @@
                                         <div class="input-group mb-3">
                                             <input name="update_signature_Image" type="file"
                                                 class="form-control form-control-lg" id="signatureImageUpload"
-                                                accept="image/*" required>
+                                                accept="image/jpeg, image/jpg" required
+                                                onchange="previewImage(this,'imagePreviews')">
                                         </div>
-                                        <div class="border rounded-lg text-center p-3">
-                                            <img src="https://via.placeholder.com/140?text=IMAGE" width="20%"
-                                                height="20%" class="img-fluid" id="preview1" alt="Preview" />
+                                        <div class="border rounded-lg text-center p-3" id="imagePreviews"
+                                            style="display: none;">
+                                            <img src="https://via.placeholder.com/140?text=IMAGE" width="50%"
+                                                height="50%" class="img-fluid" id="preview1" alt="Preview" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="liveUploads" style="display: none;">
-                                <h6 class="text-warning">Draw your signature below:</h6>
-                                <div id="signature-pad">
-                                    <canvas id="canvas" width="400" height="200"></canvas>
-                                </div>
+                                <h6 class="text-warning">Draw your signature below</h6>
+                                <canvas id="canvas" class="cansize"></canvas>
                                 <br>
                                 <input type="hidden" id="signature_input" accept="image/*">
                                 <div class="my-2">
                                     <button class="btn btn-danger btn-sm rounded-0"
                                         onclick="clearSignature()">Clear</button>
-                                    <button class="btn btn-success btn-sm rounded-0" onclick="saveSignature()">Save
-                                        Signature</button>
+                                    <!-- <button class="btn btn-success btn-sm rounded-0" onclick="saveSignature()">Save
+                                        Signature</button> -->
                                 </div>
-                                <h6 class="text-info" style="font-weight: 700;">Saved Signature:</h6>
-                                <img id="display-signature" src="" alt="Saved Signature">
+                                <!-- <h6 class="text-info" style="font-weight: 700;">Saved Signature:</h6>
+                                <img id="display-signature" src="" alt="Saved Signature"> -->
                             </div>
                         </div>
                     </div>
@@ -351,9 +405,9 @@
                             </div>
                             <div class="col-md-6 p-2">
                                 <div class="form mt-2">
-                                    <span class="text-secondary">Upload Name Proof</span>
+                                    <span class="text-secondary">Upload Name Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar)</span>
                                     <input type="file" class="form-control border-info rounded-0" id="yourNameDocument"
-                                        name="update_name_doc" accept=".pdf,.doc,.docx">
+                                        name="update_name_doc" accept=".pdf">
                                 </div>
                             </div>
                         </div>
@@ -361,19 +415,19 @@
                     <div class="hiddens" id="inputs2">
                         <div class="row my-5">
                             <span style="font-weight: 900;" class="selector">Father's Name</span>
-                            <div class="col-md-6 p-2">
-                                <div class="form-floating mb-3 mt-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mt-4" >
                                     <input type="text" class="form-control border-info rounded-0"
                                         oninput="validateInput('fatherName')" pattern="[a-zA-Z\s]+" id="fatherName"
                                         placeholder="Enter Full Name" name="update_fatherName">
                                     <label for="firstName" class="text-secondary">Father's Name</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 p-2">
-                                <div class="form mt-2">
-                                    <span class="text-secondary">Upload Father's Proof</span>
+                            <div class="col-md-6">
+                                <div class="form ">
+                                    <span class="text-secondary">Upload Father Name Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar or Driving License)</span>
                                     <input type="file" class="form-control border-info rounded-0"
-                                        id="fatherNameDocument" name="update_father_name_doc" accept=".pdf,.doc,.docx">
+                                        id="fatherNameDocument" name="update_father_name_doc" accept=".pdf">
                                 </div>
                             </div>
                         </div>
@@ -386,13 +440,14 @@
                                     <span class="text-secondary">Enter DOB</span>
                                     <input type="date" class="form-control border-info rounded-0" id="dob"
                                         name="update_dob">
+                                    <small id="dobHelp" class="form-text text-warning"></small>
                                 </div>
                             </div>
                             <div class="col-md-6 p-2">
                                 <div class="form mt-3">
-                                    <span class="text-secondary">Upload DOB Proof</span>
+                                    <span class="text-secondary">Upload DOB Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar)</span>
                                     <input type="file" class="form-control border-info rounded-0" id="dobDocument"
-                                        name="update_dob_doc" accept=".pdf,.doc,.docx">
+                                        name="update_dob_doc" accept=".pdf">
                                 </div>
                             </div>
                         </div>
@@ -423,7 +478,55 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
+        document.getElementById('dob').addEventListener('input', function () {
+            let dob = this.value;
+            let year = dob.substring(6); // Extracting year from the date string
+            let dobHelp = document.getElementById('dobHelp');
+            if (year.length !== 4 || isNaN(year)) {
+                dobHelp.innerText = "(Kindly verify that the DOB you entered above is accurate.)";
+                this.value = dob.substring(0, 10); // Limiting input to "mm/dd/yyyy"
+            } else if (parseInt(year) > new Date().getFullYear()) {
+                dobHelp.innerText = "Please enter a valid date.";
+                this.value = '';
+            } else {
+                dobHelp.innerText = "";
+            }
+        });
 
+
+        function submitForm() {
+            var checkbox1 = document.getElementById('checkbox1');
+            var checkbox2 = document.getElementById('checkbox2');
+            var checkbox3 = document.getElementById('checkbox3');
+            if (!checkbox1.checked && !checkbox2.checked && !checkbox3.checked) {
+                alert('Please select at least one option.');
+            } else {
+                alert('Form submitted successfully!');
+            }
+        }
+
+        function toggleInput(checkbox, inputId) {
+            var input = document.getElementById(inputId);
+            if (checkbox.checked) {
+                input.removeAttribute('disabled');
+            } else {
+                input.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        function previewImage(input, ids) {
+            var preview = document.getElementById(ids);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.style.display = 'block';
+                    preview.querySelector('img').setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
 
         function toggleInput(checkbox, inputDivId) {
             const inputDiv = document.getElementById(inputDivId);
@@ -592,30 +695,62 @@
 
         function validateInput(inputId) {
             const inputField = document.getElementById(inputId);
-            const input = inputField.value;
+            let input = inputField.value;
             const regex = /^[a-zA-Z\s]*$/;
             if (!regex.test(input)) {
-                inputField.value = input.replace(/[^a-zA-Z\s]/g, '');
+                input = input.replace(/[^a-zA-Z\s]/g, '');
             }
+            input = input.replace(/\s\s+/g, ' ');
+            inputField.value = input;
         }
 
+
+        document.getElementById('updateemail').addEventListener('input', function (event) {
+            const emailInput = event.target;
+            const emailValue = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailValue)) {
+                emailInput.setCustomValidity('Invalid email address. The domain must end with .com');
+            } else {
+                emailInput.setCustomValidity('');
+            }
+        });
+
+
+        // var canvas = document.getElementById('canvas');
+        // var signaturePad = new SignaturePad(canvas);
+        // var signatureInput = document.getElementById('signature_input');
+        // function clearSignature() {
+        //     event.preventDefault();
+        //     signaturePad.clear();
+        // }
+        // function saveSignature() {
+        //     event.preventDefault();
+        //     if (signaturePad.isEmpty()) {
+        //         alert("Please provide a signature first.");
+        //     } else {
+        //         var dataURL = signaturePad.toDataURL();
+        //         signatureInput.value = dataURL;
+        //         document.getElementById('display-signature').setAttribute('src', dataURL);
+        //     }
+        // }
         var canvas = document.getElementById('canvas');
         var signaturePad = new SignaturePad(canvas);
-        var signatureInput = document.getElementById('signature_input');
         function clearSignature() {
             event.preventDefault();
             signaturePad.clear();
         }
-        function saveSignature() {
+        document.getElementById('canvas').addEventListener('click', function (event) {
             event.preventDefault();
             if (signaturePad.isEmpty()) {
                 alert("Please provide a signature first.");
             } else {
                 var dataURL = signaturePad.toDataURL();
+                var signatureInput = document.getElementById('signature_input');
                 signatureInput.value = dataURL;
-                document.getElementById('display-signature').setAttribute('src', dataURL);
+                // document.getElementById('display-signature').setAttribute('src', dataURL);
             }
-        }
+        });
 
         function togglePhotoOption() {
             const uploadSection = document.getElementById('uploadSection');
@@ -632,6 +767,36 @@
             }
         }
 
+        // const videoCustom = document.getElementById('videoCustom');
+        // const canvasCustom = document.getElementById('canvasCustom');
+        // const contextCustom = canvasCustom.getContext('2d');
+        // navigator.mediaDevices.getUserMedia({ video: true })
+        //     .then(stream => {
+        //         videoCustom.srcObject = stream;
+        //         videoCustom.play();
+        //     })
+        //     .catch(err => {
+        //         console.error("An error occurred: " + err);
+        //     });
+        // function takeSnapshotCustom() {
+        //     event.preventDefault();
+        //     contextCustom.drawImage(videoCustom, 0, 0, canvasCustom.width, canvasCustom.height);
+        //     const dataUriCustom = canvasCustom.toDataURL('image/jpeg');
+        //     document.getElementById('update_profile_Picture').value = dataUriCustom;
+        //     const imgCustom = new Image();
+        //     imgCustom.onload = function () {
+        //         contextCustom.fillStyle = '#ffffff';
+        //         contextCustom.fillRect(0, 0, canvasCustom.width, canvasCustom.height);
+        //         contextCustom.drawImage(imgCustom, 0, 0, canvasCustom.width, canvasCustom.height);
+        //         const resultsDivCustom = document.getElementById('resultsCustom');
+        //         resultsDivCustom.innerHTML = '<h6>Capture Picture</h6>';
+        //         const resultImgCustom = new Image();
+        //         resultImgCustom.src = canvasCustom.toDataURL('image/jpeg');
+        //         resultsDivCustom.appendChild(resultImgCustom);
+        //     };
+        //     imgCustom.src = dataUriCustom;
+        // }
+
         const videoCustom = document.getElementById('videoCustom');
         const canvasCustom = document.getElementById('canvasCustom');
         const contextCustom = canvasCustom.getContext('2d');
@@ -647,19 +812,26 @@
             event.preventDefault();
             contextCustom.drawImage(videoCustom, 0, 0, canvasCustom.width, canvasCustom.height);
             const dataUriCustom = canvasCustom.toDataURL('image/jpeg');
-            document.getElementById('update_profile_Picture').value = dataUriCustom;
-            const imgCustom = new Image();
-            imgCustom.onload = function () {
+            const scaleFactor = 1.5;
+            const centerX = canvasCustom.width / 2;
+            const centerY = canvasCustom.height / 2;
+            const zoomedWidth = canvasCustom.width * scaleFactor;
+            const zoomedHeight = canvasCustom.height * scaleFactor;
+            const zoomedX = centerX - zoomedWidth / 2;
+            const zoomedY = centerY - zoomedHeight / 2;
+            const imgCustomZoomed = new Image();
+            imgCustomZoomed.onload = function () {
                 contextCustom.fillStyle = '#ffffff';
                 contextCustom.fillRect(0, 0, canvasCustom.width, canvasCustom.height);
-                contextCustom.drawImage(imgCustom, 0, 0, canvasCustom.width, canvasCustom.height);
+                contextCustom.drawImage(imgCustomZoomed, zoomedX, zoomedY, zoomedWidth, zoomedHeight);
                 const resultsDivCustom = document.getElementById('resultsCustom');
-                resultsDivCustom.innerHTML = '<h6>Capture Picture</h6>';
-                const resultImgCustom = new Image();
-                resultImgCustom.src = canvasCustom.toDataURL('image/jpeg');
-                resultsDivCustom.appendChild(resultImgCustom);
+                resultsDivCustom.innerHTML = '<h6>Zoomed-In Picture</h6>';
+                const resultImgCustomZoomed = new Image();
+                resultImgCustomZoomed.src = canvasCustom.toDataURL('image/jpeg');
+                resultsDivCustom.appendChild(resultImgCustomZoomed);
+                document.getElementById('update_profile_Picture').value = canvasCustom.toDataURL('image/jpeg');
             };
-            imgCustom.src = dataUriCustom;
+            imgCustomZoomed.src = dataUriCustom;
         }
 
         const fileInput = document.getElementById('signatureImageUpload');

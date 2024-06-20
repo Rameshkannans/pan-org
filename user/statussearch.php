@@ -227,10 +227,16 @@ if (isset($_POST['user_statuss'])) {
         .bx.bxs-color {
             font-size: 24px;
         }
+        .watermark {
+            background-image: url('../image/wa.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 
-<body id="body-pd">
+<body id="body-pd" class="watermark">
     <header class="header shadow" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <span style="font-weight: 900;" class="text-primary">Status Search</span>
@@ -256,7 +262,8 @@ if (isset($_POST['user_statuss'])) {
                         </span> Update Pan Card </a>
                     <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span
                             class="nav_name">Status</span>
-                    </a> <a href="contactus.php" class="nav_link">  <i class='bx bxs-contact' style="font-size: 20px;"></i><span class="nav_name">User
+                    </a> <a href="contactus.php" class="nav_link"> <i class='bx bxs-contact'
+                            style="font-size: 20px;"></i><span class="nav_name">User
                             Detials</span> </a>
                 </div>
             </div>
@@ -278,12 +285,18 @@ if (isset($_POST['user_statuss'])) {
                     <div class="card-body text-center ">
                         <form class=" d-flex justify-content-center" action="" method="post"
                             enctype="multipart/form-data">
-                            <input class="form-control me-2 rounded-0 w-50"
-                                type="text" maxlength="8"
-                                name="status_search_recept" 
-                                type="text" placeholder="Enter Recept number" required>
-                            <input type="submit" class="btn btn-primary rounded-0" value="Submit" name="user_statuss">
-                        </form>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 p-2">
+                                    <input class="form-control  rounded-0 " type="text" maxlength="8"
+                                        name="status_search_recept" type="text" placeholder="Enter Recept"
+                                        required>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-2">
+                                    <input type="submit" class="btn btn-primary rounded-0" value="Submit"
+                                        name="user_statuss">
+                                </div>
+                            </div>
+                        </form> 
 
 
                         <?php if (!empty($login_error_message)): ?>
@@ -339,7 +352,8 @@ if (isset($_POST['user_statuss'])) {
                                     echo (isset($sel_user_status_new['new_profile_picture']) || isset($sel_user_status_update['update_profile_picture']))
                                         ? '../' . (isset($sel_user_status_new['new_profile_picture']) ? $sel_user_status_new['new_profile_picture'] : $sel_user_status_update['update_profile_picture'])
                                         : '';
-                                    ?>" alt="Profile Photo" class="img-fluid rounded-1 my-2" style="width: 100px; height: 100px;">
+                                    ?>" alt="Profile Photo" class="img-fluid rounded-1 my-2"
+                                        style="width: 100px; height: 100px;">
 
 
                                 </div>
