@@ -12,6 +12,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Teko:wght@300..700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+
     <style>
         body {
             margin: 0;
@@ -103,6 +105,72 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
+
+        .aerror {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+        }
+
+
+        #image {
+            max-width: 100%;
+        }
+
+        .cropper-container {
+            display: block;
+        }
+
+        #croppedImage {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* ==================== */
+        .overlay {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+
+        .loader {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 50%;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            margin: -20px 0 0 -20px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .blur-background {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        .offcanvas-backdrop {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -114,12 +182,29 @@
 
 
             <div class="col-md-3 shadow-lg p-4 rounded-4 bg-info">
-
+                <div class="overlay" id="overlay"></div>
+                <div class="loader" id="loader"></div>
+                <div class="container">
+                    <div class="offcanvas offcanvas-end" id="cropperOffcanvas">
+                        <div class="offcanvas-header d-flex justify-content-center">
+                            <h5 class="offcanvas-title ">Crop Image</h5>
+                        </div>
+                        <div class="offcanvas-body">
+                            <div class="d-flex justify-content-center gap-5 my-5 mt-3">
+                                <button type="button" id="cropButton" class="btn btn-success rounded-0">Confirm
+                                    Crop</button>
+                                <button type="button" id="cancelButton" class="btn btn-danger rounded-0 me-3"
+                                    data-bs-dismiss="offcanvas">Cancel</button>
+                            </div>
+                            <img id="image" style="max-width: 100%; max-height: 80vh;">
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
 
-            <div class="col-md-9 p-3">
+            <div class="col-md-9 p-3" id="content">
                 <div class="justify-content-end d-flex">
                     <a href="../index.php"> <button class="btn btn-danger btn-sm">
                             <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -131,25 +216,68 @@
                             <span>Back</span>
                         </button></a>
                 </div>
-                <form action="../forms_datas.php" method="post" enctype="multipart/form-data">
+                <form action="../forms_datas.php" method="post" enctype="multipart/form-data" id="myForm">
                     <div class="row justify-content-evenly my-2 ">
                         <div class="col-md-4 p-2 my-1 ">
                             <div class="form mt-3 mb-3">
-                                <label for="oldpan" class="mb-2 selector">Upload old Pan Card</label>
+                                <label for="oldpan" class="mb-2 selector">Upload old Pan Card <a class="text-success"
+                                        href="#panrule" data-bs-toggle="modal">(Pan card Front Side)</a>
+                                    <span class="text-danger">*</span></label>
+
+                                <div class="modal fade" id="panrule">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content text-center">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Pan Card Upload(Format Support by jpeg,jpg, png)
+                                                </h4>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <img src="../image/idCardHelp.png" style="width: 800px;" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
                                 <input type="file" class="form-control border-info rounded-0" id="oldpan"
-                                    name="update_old_pan_doc" accept=".pdf" multiple required>
+                                    name="update_old_pan_doc" accept=".jpeg, .jpg, .png" multiple required
+                                    oninvalid="onInvalidInput('oldpan')" onchange="previewImage(this,'imagePreviewp')"
+                                    oninput="hideError('oldpan')">
+
+
+                                <div class="border rounded-lg text-center p-3" id="imagePreviewp"
+                                    style="display: none;">
+                                    <img src="https://via.placeholder.com/140?text=IMAGE" width="50%" height="50%"
+                                        class="img-fluid" id="previewoldpan" alt="Preview" />
+                                </div>
                             </div>
+
+
+
+
+                            <span class="aerror" id="oldpanError"></span>
                         </div>
                         <div class="col-md-4 p-2 mt-3">
                             <div class="form-floating mb-3 mt-4">
                                 <input type="text" class="form-control border-info rounded-0" id="upoldpannum"
                                     name="update_old_pan_num" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
                                     title="The PAN number must be 10 characters long, starting with five uppercase letters, followed by four digits, and ending with one uppercase letter."
-                                    maxlength="10" required>
-                                <label for="upoldpannum" class="text-secondary">Old PAN Card Number</label>
+                                    maxlength="10" required oninvalid="onInvalidInput('upoldpannum')"
+                                    oninput="hideError('upoldpannum')">
+                                <label for="upoldpannum" class="text-secondary">Old PAN Card Number <span
+                                        class="text-danger">*</span></label>
                             </div>
-
-
+                            <span class="aerror" id="upoldpannumError"></span>
                         </div>
                         <!-- <div class="col-md-4 p-2 my-1">
                             <div class="form mt-3 mb-3 ">
@@ -170,20 +298,26 @@
                         <div class="col-md-6 p-2">
                             <div class="form-floating mb-3 mt-3">
                                 <input type="text" class="form-control border-info rounded-0"
-                                    oninput="validateInput('updatename')" pattern="[a-zA-Z\s]+" id="updatename"
-                                    placeholder="Enter Full Name" name="update_call_name" required>
-                                <label for="updatename" class="text-secondary">Full Name (As per Aadhar)</label>
+                                    oninput="validateInput('updatename'); hideError('updatename')" pattern="[a-zA-Z\s]+"
+                                    id="updatename" placeholder="Enter Full Name" name="update_call_name" required
+                                    oninvalid="onInvalidInput('updatename')">
+                                <label for="updatename" class="text-secondary">Full Name (As per Aadhar)<span
+                                        class="text-danger">*</span></label>
                             </div>
+                            <span class="aerror" id="updatenameError"></span>
                         </div>
                         <div class="col-md-6 p-2">
                             <div class="form-floating mt-3 mb-3">
                                 <input type="text" class="form-control border-info rounded-0" id="aadharNumber"
                                     placeholder="Enter Aadhar Number" name="update_aadharNumber"
-                                    title="Please enter a Valid Aadhar number" maxlength="14" oninput="formatAadhar()"
-                                    required>
-                                <label for="aadharNumber" class="text-secondary">Aadhar Number</label>
+                                    title="Please enter a Valid Aadhar number" maxlength="14"
+                                    oninput="formatAadhar(); hideError('aadharNumber')" required
+                                    oninvalid="onInvalidInput('aadharNumber')" pattern="\d{4} \d{4} \d{4}">
+                                <label for="aadharNumber" class="text-secondary">Aadhar Number<span
+                                        class="text-danger">*</span></label>
                             </div>
                             <div id="messageaadhaar"></div>
+                            <span class="aerror" id="aadharNumberError"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -191,19 +325,24 @@
                             <div class="form-floating mb-3 mt-3">
                                 <input type="text" class="form-control border-info rounded-0" id="mobileNumber"
                                     placeholder="Enter Mobil Number" name="update_mobileNumber"
-                                    oninput="this.value = this.value.replace(/[^6789\d]/g, '');" pattern="[6789]\d{9}"
+                                    oninput="this.value = this.value.replace(/[^6789\d]/g, ''); hideError('mobileNumber')"
+                                    pattern="[6789]\d{9}"
                                     title="Please enter a 10-digit number starting with 6, 7, 8, or 9" maxlength="10"
-                                    required>
-                                <label for="mobileNumber" class="text-secondary">Mobil Number (As per Aadhar)</label>
+                                    required oninvalid="onInvalidInput('mobileNumber')">
+                                <label for="mobileNumber" class="text-secondary">Mobil Number <span
+                                        class="text-danger">*</span></label>
                             </div>
                             <div id="messagemobile"></div>
+                            <span class="aerror" id="mobileNumberError"></span>
                         </div>
                         <div class="col-md-6 p-2">
                             <div class="form-floating mt-3 mb-3">
                                 <input type="email" class="form-control border-info rounded-0" id="updateemail"
-                                    placeholder="Enter email" name="update_email">
+                                    placeholder="Enter email" name="update_email"
+                                    oninvalid="onInvalidInput('updateemail')" oninput="hideError('updateemail')">
                                 <label for="updateemail" class="text-secondary">Email (Optional)</label>
                             </div>
+                            <span class="aerror" id="updateemailError"></span>
                         </div>
                     </div>
 
@@ -213,28 +352,34 @@
 
                     <div class="row gap-5 justify-content-center my-5">
                         <div class="col-md-5 text-center p-2 rounded-4 border border-warning border-2">
-                            <h6 class="my-4 text-info">Upload Aadhar Front Side</h6>
+                            <h6 class="my-4 text-info">Upload <b>Candidate</b> Aadhar Front Side (Format Support by
+                                jpeg,jpg, png)<span class="text-danger">*</span></h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="update_pan_aadhar_front" class="form-control form-control-lg"
                                     id="aadharfront" accept="image/jpeg, image/jpg" required
-                                    onchange="previewImage(this,'imagePreviewf')">
+                                    onchange="previewImage(this,'imagePreviewf')"
+                                    oninvalid="onInvalidInput('aadharfront')" oninput="hideError('aadharfront')">
                             </div>
                             <div class="border rounded-lg text-center p-3" id="imagePreviewf" style="display: none;">
                                 <img src="https://via.placeholder.com/140?text=IMAGE" width="50%" height="50%"
                                     class="img-fluid" id="preview3" alt="Preview" />
                             </div>
+                            <span class="aerror" id="aadharfrontError"></span>
                         </div>
                         <div class="col-md-5 text-center p-2 rounded-4 border border-warning border-2">
-                            <h6 class="my-4 text-info">Upload Aadhar Back Side</h6>
+                            <h6 class="my-4 text-info">Upload <b>Candidate</b> Aadhar Back Side (Format Support by
+                                jpeg,jpg, png)<span class="text-danger">*</span></h6>
                             <div class="input-group mb-3">
                                 <input type="file" name="update_pan_aadhar_back" class="form-control form-control-lg"
                                     id="aadharback" accept="image/jpeg, image/jpg" required
-                                    onchange="previewImage(this,'imagePreviewb')">
+                                    onchange="previewImage(this,'imagePreviewb')"
+                                    oninvalid="onInvalidInput('aadharback')" oninput="hideError('aadharback')">
                             </div>
                             <div class="border rounded-lg text-center p-3" id="imagePreviewb" style="display: none;">
                                 <img src="https://via.placeholder.com/140?text=IMAGE" width="50%" height="50%"
                                     class="img-fluid" id="preview4" alt="Preview" />
                             </div>
+                            <span class="aerror" id="aadharbackError"></span>
                         </div>
                     </div>
 
@@ -245,7 +390,7 @@
 
                     <div class="row justify-content-evenly my-5">
                         <div class="col-md-5 p-2 text-center rounded-4 border border-info my-1">
-                            <span class="selector">Please upload photo</span>
+                            <span class="selector">Please upload photo<span class="text-danger">*</span></span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="upload" name="photoOption"
@@ -267,18 +412,45 @@
                                             <input name="update_profile_Picture" type="file"
                                                 class="form-control form-control-lg" id="profilePictureUpload"
                                                 accept="image/jpeg, image/jpg*" required
-                                                onchange="previewImage(this,'imagePreviewp')">
+                                                onchange="previewImage(this,'imagePreviewp')"
+                                                oninvalid="onInvalidInput('profilePictureUpload')"
+                                                oninput="hideError('profilePictureUpload')">
                                         </div>
                                         <div class="border rounded-lg text-center p-3" id="imagePreviewp"
                                             style="display: none;">
                                             <img src="https://via.placeholder.com/140?text=IMAGE" width="50%"
                                                 height="50%" class="img-fluid" id="preview" alt="Preview" />
                                         </div>
+                                        <span class="aerror" id="profilePictureUploadError"></span>
                                     </div>
                                 </div>
                             </div>
                             <div id="liveUpload" style="display: none;" class="text-center">
-                                <h6 class="header3-custom text-warning">Take a selfie</h6>
+                                <h6 class="header3-custom text-warning">Take a selfie <a href="#photorule"
+                                        data-bs-toggle="modal"> (Background should be White or
+                                        Plain)</a></h6>
+                                <div class="modal fade" id="photorule">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content text-center">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Background should be White or
+                                                    Plain</h4>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <img src="../image/photoHelp.png" style="width: 800px;" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="d-flex text-align-center justify-content-center">
                                     <div class="selfie-container-custom">
                                         <video id="videoCustom" class="video-element-custom " width="320" height="240"
@@ -296,7 +468,7 @@
                             </div>
                         </div>
                         <div class="col-md-5 p-2 text-center rounded-4 border border-info my-1">
-                            <span class="selector">Please upload signature</span>
+                            <span class="selector">Please upload signature<span class="text-danger">*</span></span>
                             <div class="d-flex justify-content-center my-3">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" id="upsig" name="sign" value="normals"
@@ -319,13 +491,19 @@
                                             <input name="update_signature_Image" type="file"
                                                 class="form-control form-control-lg" id="signatureImageUpload"
                                                 accept="image/jpeg, image/jpg" required
-                                                onchange="previewImage(this,'imagePreviews')">
+                                                onchange="previewImage(this,'imagePreviews')"
+                                                oninvalid="onInvalidInput('signatureImageUpload')"
+                                                oninput="hideError('signatureImageUpload')">
                                         </div>
                                         <div class="border rounded-lg text-center p-3" id="imagePreviews"
                                             style="display: none;">
-                                            <img src="https://via.placeholder.com/140?text=IMAGE" width="50%"
-                                                height="50%" class="img-fluid" id="preview1" alt="Preview" />
+                                            <!-- <img src="https://via.placeholder.com/140?text=IMAGE" width="50%"
+                                                height="50%" class="img-fluid" id="preview1" alt="Preview" /> -->
                                         </div>
+                                        <div id="croppedImageContainer">
+                                            <img id="croppedImage" class="img-fluid">
+                                        </div>
+                                        <span class="aerror" id="signatureImageUploadError"></span>
                                     </div>
                                 </div>
                             </div>
@@ -355,20 +533,20 @@
                     <div class="text-center justify-content-center d-flex my-5">
                         <div class="mx-5">
                             <label>
-                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox1"
-                                    onclick="toggleInput(this, 'inputs1')"> Your Name
+                                <input type="checkbox" class="form-check-input rounded-5 border-primary border-2"
+                                    id="checkbox1" onclick="toggleInput(this, 'inputs1')"> Your Name
                             </label>
                         </div>
                         <div class="mx-5">
                             <label>
-                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox2"
-                                    onclick="toggleInput(this, 'inputs2')"> Father Name
+                                <input type="checkbox" class="form-check-input rounded-5  border-primary border-2"
+                                    id="checkbox2" onclick="toggleInput(this, 'inputs2')"> Father Name
                             </label>
                         </div>
                         <div class="mx-5">
                             <label>
-                                <input type="checkbox" class="form-check-input rounded-5" id="checkbox3"
-                                    onclick="toggleInput(this, 'inputs3')"> Date of Birth
+                                <input type="checkbox" class="form-check-input rounded-5  border-primary border-2"
+                                    id="checkbox3" onclick="toggleInput(this, 'inputs3')"> Date of Birth
                             </label>
                         </div>
                     </div>
@@ -377,92 +555,118 @@
 
 
                     <div class="hiddens" id="inputs1">
-                        <div class="row">
+                        <div class="row p-2 border border-1 border-secondary">
                             <span style="font-weight: 900;" class="selector">Name correction</span>
                             <div class="col-md-6 p-2">
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
-                                        oninput="validateInput('firstName')" pattern="[a-zA-Z\s]+" id="firstName"
-                                        placeholder="Enter Full Name" name="update_firstName">
+                                        oninput="validateInput('firstName');hideError('firstName');"
+                                        pattern="[a-zA-Z\s]+" id="firstName" placeholder="Enter Full Name"
+                                        name="update_firstName" oninvalid="onInvalidInput('firstName')">
                                     <label for="firstName" class="text-secondary">Full Name</label>
                                 </div>
+                                <span class="aerror" id="firstNameError"></span>
                             </div>
-                            <div class="col-md-6 p-2">
+                            <!-- <div class="col-md-6 p-2">
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
-                                        oninput="validateInput('middleName')" pattern="[a-zA-Z\s]+" id="middleName"
-                                        placeholder="Enter Full Name" name="update_middleName">
+                                        oninput="validateInput('middleName');hideError('middleName');"
+                                        pattern="[a-zA-Z\s]+" id="middleName" placeholder="Enter Full Name"
+                                        name="update_middleName" oninvalid="onInvalidInput('middleName')">
                                     <label for="middleName" class="text-secondary">Middle Name</label>
                                 </div>
-                            </div>
+                                <span class="aerror" id="middleNameError"></span>
+                            </div> -->
                             <div class="col-md-6 p-2">
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="text" class="form-control border-info rounded-0"
-                                        oninput="validateInput('lastName')" pattern="[a-zA-Z\s]+" id="lastName"
-                                        placeholder="Enter Full Name" name="update_lastName">
+                                        oninput="validateInput('lastName');hideError('lastName');" pattern="[a-zA-Z\s]+"
+                                        id="lastName" placeholder="Enter Full Name" name="update_lastName"
+                                        oninvalid="onInvalidInput('lastName')">
                                     <label for="lastName" class="text-secondary">Last Name</label>
                                 </div>
+                                <span class="aerror" id="lastNameError"></span>
                             </div>
                             <div class="col-md-6 p-2">
-                                <div class="form mt-2">
-                                    <span class="text-secondary">Upload Name Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar)</span>
+                                <div class="form ">
+                                    <span class="text-secondary">Upload Name Proof (Driving License,
+                                        Passport, Ration Card, Voters ID, 10th Mark Sheet, Birth Certificate) Format
+                                        Supported by <span class="text-danger"> .pdf</span></span>
                                     <input type="file" class="form-control border-info rounded-0" id="yourNameDocument"
-                                        name="update_name_doc" accept=".pdf">
+                                        name="update_name_doc" accept=".pdf"
+                                        oninvalid="onInvalidInput('yourNameDocument')"
+                                        oninput="hideError('yourNameDocument')">
                                 </div>
+                                <span class="aerror" id="yourNameDocumentError"></span>
                             </div>
                         </div>
                     </div>
                     <div class="hiddens" id="inputs2">
-                        <div class="row my-5">
+                        <div class="row my-5 p-2 border border-1 border-secondary">
                             <span style="font-weight: 900;" class="selector">Father's Name</span>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3 mt-4" >
+                                <div class="form-floating mb-3 mt-4 ">
                                     <input type="text" class="form-control border-info rounded-0"
-                                        oninput="validateInput('fatherName')" pattern="[a-zA-Z\s]+" id="fatherName"
-                                        placeholder="Enter Full Name" name="update_fatherName">
+                                        oninput="validateInput('fatherName');hideError('fatherName');"
+                                        pattern="[a-zA-Z\s]+" id="fatherName" placeholder="Enter Full Name"
+                                        name="update_fatherName" oninvalid="onInvalidInput('fatherName')">
                                     <label for="firstName" class="text-secondary">Father's Name</label>
                                 </div>
+                                <span class="aerror" id="fatherNameError"></span>
                             </div>
                             <div class="col-md-6">
                                 <div class="form ">
-                                    <span class="text-secondary">Upload Father Name Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar or Driving License)</span>
-                                    <input type="file" class="form-control border-info rounded-0"
-                                        id="fatherNameDocument" name="update_father_name_doc" accept=".pdf">
+                                    <span class="text-secondary">Upload Father Name Proof (Driving License,
+                                        Passport, Ration Card, Voters ID, 10th Mark Sheet, Birth Certificate) Format
+                                        Supported by <span class="text-danger"> .pdf</span>
+                                        <input type="file" class="form-control border-info rounded-0"
+                                            id="fatherNameDocument" name="update_father_name_doc" accept=".pdf"
+                                            oninvalid="onInvalidInput('fatherNameDocument')"
+                                            oninput="hideError('fatherNameDocument')">
                                 </div>
+                                <span class="aerror" id="fatherNameDocumentError"></span>
                             </div>
                         </div>
                     </div>
                     <div class="hiddens" id="inputs3">
-                        <div class="row my-5">
+                        <div class="row my-5 border border-1 border-secondary p-2">
                             <span style="font-weight: 900;" class="selector">Date Of Birth</span>
                             <div class="col-md-6 p-2">
-                                <div class="form mt-3">
+                                <div class="form mt-4">
                                     <span class="text-secondary">Enter DOB</span>
                                     <input type="date" class="form-control border-info rounded-0" id="dob"
-                                        name="update_dob">
+                                        name="update_dob" oninvalid="onInvalidInput('dob')" oninput="hideError('dob')">
                                     <small id="dobHelp" class="form-text text-warning"></small>
                                 </div>
+                                <span class="aerror" id="dobError"></span>
                             </div>
                             <div class="col-md-6 p-2">
-                                <div class="form mt-3">
-                                    <span class="text-secondary">Upload DOB Proof (10th Marksheet or 10th TC or Birth Certificate or Aadhar)</span>
-                                    <input type="file" class="form-control border-info rounded-0" id="dobDocument"
-                                        name="update_dob_doc" accept=".pdf">
+                                <div class="form">
+                                    <span class="text-secondary">Upload DOB Proof (Driving License,
+                                        Passport, Ration Card, Voters ID, 10th Mark Sheet, Birth Certificate) Format
+                                        Supported by <span class="text-danger"> .pdf</span>
+                                        <input type="file" class="form-control border-info rounded-0" id="dobDocument"
+                                            name="update_dob_doc" accept=".pdf"
+                                            oninvalid="onInvalidInput('dobDocument')"
+                                            oninput="hideError('dobDocument')">
                                 </div>
+                                <span class="aerror" id="dobDocumentError"></span>
                             </div>
                         </div>
                     </div>
 
 
-
-                    <div class="text-center" id="final" style="display: block;">
-                        <input class="form-check-input" type="checkbox" id="confirm" name="option1" value="something"
-                            required>
-                        <label class="form-check-label text-primary" for="confirm" style="font-weight: 500;">If you
-                            given deatais are
-                            correct ,
-                            please click the check box
+                    <div class="ps-5 mt-5" style="display: block;" id="final">
+                        <input class="form-check-input border border-warning border-2" type="checkbox" id="confirm"
+                            name="option1" value="something" required>
+                        <label class="form-check-label text-primary" for="confirm" style="font-weight: 500;">I hereby
+                            consent to provide my Aadhaar Number/data for Aadhaar based authentication for the purpose
+                            of pan card application only. <br>
                         </label>
+                        <label class="form-check-label text-primary" for="confirm">(பான் கார்டு விண்ணப்பத்திற்காக
+                            மட்டுமே ஆதார்
+                            அடிப்படையிலான
+                            அங்கீகாரத்திற்காக எனது ஆதார் எண்/தரவை வழங்க நான் ஒப்புக்கொள்கிறேன்.)</label>
                     </div>
                     <input type="hidden" name="update_pan_recept_num">
                     <div class="text-center my-5">
@@ -476,7 +680,127 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
     <script>
+
+        var offcanvasElement = document.getElementById('cropperOffcanvas');
+        var contentElement = document.getElementById('content');
+        offcanvasElement.addEventListener('show.bs.offcanvas', function () {
+            contentElement.classList.add('blur-background');
+        });
+        offcanvasElement.addEventListener('hide.bs.offcanvas', function () {
+            contentElement.classList.remove('blur-background');
+        });
+        var myOffcanvas = new bootstrap.Offcanvas(offcanvasElement, {
+            backdrop: false,
+            keyboard: false
+        });
+
+        // document.getElementById('myForm').addEventListener('submit', function (event) {
+        //     document.getElementById('loader').style.display = 'block';
+        //     document.getElementById('overlay').style.display = 'block';
+        // });
+
+
+        const fileInputs = document.getElementById('signatureImageUpload');
+        const image = document.getElementById('image');
+        const cropButton = document.getElementById('cropButton');
+        const cancelButton = document.getElementById('cancelButton');
+        const croppedImage = document.getElementById('croppedImage');
+        const croppedImageContainer = document.getElementById('croppedImageContainer');
+        const hiddenFileInput = document.getElementById('signatureImageUpload');
+        let cropper;
+        fileInputs.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    image.src = event.target.result;
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(image, {
+                        aspectRatio: 4 / 1,
+                        viewMode: 1,
+                    });
+                    const cropperOffcanvas = new bootstrap.Offcanvas(document.getElementById('cropperOffcanvas'));
+                    cropperOffcanvas.show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        cropButton.addEventListener('click', function () {
+            const canvas = cropper.getCroppedCanvas({
+                width: 400,
+                height: 100,
+                imageSmoothingQuality: 'high',
+            });
+            canvas.toBlob(function (blob) {
+                const url = URL.createObjectURL(blob);
+                croppedImage.src = url;
+                croppedImage.style.display = 'block';
+                croppedImageContainer.style.display = 'block';
+                let modifiedString = url.replace('blob:http://localhost/', '') + '.jpg';
+                const dataTransfer = new DataTransfer();
+                const file = new File([blob], modifiedString, { type: 'image/jpg' });
+                dataTransfer.items.add(file);
+                hiddenFileInput.files = dataTransfer.files;
+                const cropperOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cropperOffcanvas'));
+                cropperOffcanvas.hide();
+            }, 'image/jpg');
+        });
+        cancelButton.addEventListener('click', function () {
+            fileInputs.value = '';
+            const cropperOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cropperOffcanvas'));
+            cropperOffcanvas.hide();
+        });
+
+
+
+
+
+
+
+
+
+
+        // ---------------------------------------------------------------------
+        const form = document.getElementById('myForm');
+        const hiddenFieldPhoto = document.getElementById('update_profile_Picture');
+        const hiddenFieldSignature = document.getElementById('signature_input');
+        const livePhoto = document.getElementById('live');
+        const liveSign = document.getElementById('csign');
+        form.addEventListener('submit', function (event) {
+            if (livePhoto.checked && !hiddenFieldPhoto.value.trim()) {
+                event.preventDefault();
+                alert('Profile photo is required!');
+            } else if (liveSign.checked && !hiddenFieldSignature.value.trim()) {
+                event.preventDefault();
+                alert('Signature is required!');
+            }
+        });
+
+
+        function onInvalidInput(inputId) {
+            const inputElement = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + 'Error');
+
+            if (inputElement.validity.valueMissing) {
+                errorElement.textContent = 'Please enter a value.';
+            }
+            else {
+                errorElement.textContent = 'Enter vali data.';
+            }
+
+            errorElement.style.display = 'inline';
+        }
+
+        function hideError(inputId) {
+            const errorElement = document.getElementById(inputId + 'Error');
+            errorElement.style.display = 'none';
+        }
+
 
         document.getElementById('dob').addEventListener('input', function () {
             let dob = this.value;
@@ -630,6 +954,19 @@
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $('#preview1').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#oldpan").on('change', function () {
+                var input = $(this)[0];
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#previewoldpan').attr('src', e.target.result);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }

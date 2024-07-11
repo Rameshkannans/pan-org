@@ -96,7 +96,7 @@ class Database
         $newPanCardSuccess = $this->conn->query($newPanCard);
         if ($newPanCardSuccess) {
             if (!headers_sent()) {
-                header('Location: index.php');
+                header("Location: users/new_pan_success.php");
                 exit();
             } else {
                 echo "Error: Headers already sent";
@@ -138,7 +138,7 @@ class Database
         $updatePanCardSuccess = $this->conn->query($updatePanCard);
         if ($updatePanCardSuccess) {
             if (!headers_sent()) {
-                header('Location: index.php');
+                header('Location: users/update_pan_success.php');
                 exit();
             } else {
                 echo "Error: Headers already sent";
@@ -242,22 +242,22 @@ class Database
         }
     }
 
-    public function insert_user_reg($user_reg_name, $user_reg_email, $user_reg_mobile)
-    {
-        $userReg = "INSERT INTO user_register (user_reg_name, user_reg_email, user_reg_mobile) 
-                      VALUES ('$user_reg_name', '$user_reg_email', '$user_reg_mobile')";
-        $userRegSuccess = $this->conn->query($userReg);
-        if ($userRegSuccess) {
-            if (!headers_sent()) {
-                header('Location: user/logreg.php');
-                exit();
-            } else {
-                echo "Error: Headers already sent";
-            }
-        } else {
-            echo "Error: " . $userReg . "<br>" . $this->conn->error;
-        }
-    }
+    // public function insert_user_reg($user_reg_name, $user_reg_email, $user_reg_mobile)
+    // {
+    //     $userReg = "INSERT INTO user_register (user_reg_name, user_reg_email, user_reg_mobile) 
+    //                   VALUES ('$user_reg_name', '$user_reg_email', '$user_reg_mobile')";
+    //     $userRegSuccess = $this->conn->query($userReg);
+    //     if ($userRegSuccess) {
+    //         if (!headers_sent()) {
+    //             header('Location: user/logreg.php');
+    //             exit();
+    //         } else {
+    //             echo "Error: Headers already sent";
+    //         }
+    //     } else {
+    //         echo "Error: " . $userReg . "<br>" . $this->conn->error;
+    //     }
+    // }
 
 
     public function sel_enquiry_all_data()
@@ -297,7 +297,7 @@ class Database
         $enquiryRegSuccess = $this->conn->query($enquiryReg);
         if ($enquiryRegSuccess) {
             if (!headers_sent()) {
-                header('Location: index.php');
+                header('Location: users/contact_form_success.php');
                 exit();
             } else {
                 echo "Error: Headers already sent";
@@ -602,7 +602,17 @@ class Database
         }
     }
 
+    public function select_last_inserted_new_pan_row()
+    {
+        $query = "SELECT * FROM new_pan ORDER BY new_pan_id  DESC LIMIT 1";
+        return $this->conn->query($query);
+    }
 
+    public function select_last_inserted_update_pan_row()
+    {
+        $query = "SELECT * FROM update_pan ORDER BY update_pan_id  DESC LIMIT 1";
+        return $this->conn->query($query);
+    }
 
 
 }

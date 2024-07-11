@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #0000F7;
+}
+.borders{
+    border: 1px solid #0000F7;
+    
+}
+.main-container{
+    border: 2px solid #0000F7;
+    flex: 1 1 45%;
+
+    /* padding: 0 5px; */
+    
+}
+.styled-input {
+    width: 26px;
+    height: 26px;
+    margin: -1px;
+    border-radius: 0;
+    border: 1px solid #0000F7;
+    text-align: center;
+}
+
+.styled-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+

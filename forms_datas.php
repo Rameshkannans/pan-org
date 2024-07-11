@@ -10,6 +10,9 @@ if (isset($_POST['new_pan_submit'])) {
     $new_aadharNumber = $_POST['new_aadharNumber'];
     $new_mobileNumber = $_POST['new_mobileNumber'];
     $new_email = $_POST['new_email'];
+    if (empty($new_email)) {
+        $new_email = "admin@gmail.com";
+    }
 
     $new_pan_dob = $_POST['new_pan_dob'];
     $new_choose_fm = $_POST['new_choose_fm'];
@@ -85,7 +88,7 @@ if (isset($_POST['new_pan_submit'])) {
     }
 
     if (isset($_POST['new_pan_recept_num'])) {
-        $randomNumber = generateRandomNumber();
+        $randomNumber = NgenerateRandomNumber();
     }
 
     $fm_new_pan_aadhar_front = $_FILES['fm_new_pan_aadhar_front']['name'];
@@ -130,6 +133,9 @@ if (isset($_POST['update_pan_submit'])) {
     $update_aadharNumber = $_POST['update_aadharNumber'];
     $update_mobileNumber = $_POST['update_mobileNumber'];
     $update_email = $_POST['update_email'];
+    if (empty($update_email)) {
+        $update_email = "admin@gmail.com";
+    }
 
     $update_aadhaar_doc_name = $_FILES['update_aadhaar_doc']['name'];
     $update_aadhaar_doc_path = $_FILES['update_aadhaar_doc']['tmp_name'];
@@ -185,7 +191,7 @@ if (isset($_POST['update_pan_submit'])) {
     $update_dobproof_doc_folder = "updatepandocx/" . $update_dobproof_doc_name;
     move_uploaded_file($update_dobproof_doc_path, $update_dobproof_doc_folder);
     if (isset($_POST['update_pan_recept_num'])) {
-        $randomNumberupdate = generateRandomNumber();
+        $randomNumberupdate = UgenerateRandomNumber();
     }
 
 
@@ -226,12 +232,11 @@ if (isset($_POST['update_pan_submit'])) {
 }
 
 
-
-function generateRandomNumber()
+function NgenerateRandomNumber()
 {
     $alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $alphaNumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    $firstTwoAlpha = $alpha[random_int(0, 25)] . $alpha[random_int(0, 25)];
+    $firstTwoAlpha = 'N' . $alpha[random_int(0, 25)];
     $nextFour = '';
     for ($i = 0; $i < 4; $i++) {
         $nextFour .= $alphaNumeric[random_int(0, 35)];
@@ -239,6 +244,20 @@ function generateRandomNumber()
     $lastTwoAlpha = $alpha[random_int(0, 25)] . $alpha[random_int(0, 25)];
     return $firstTwoAlpha . $nextFour . $lastTwoAlpha;
 }
+
+function UgenerateRandomNumber()
+{
+    $alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $alphaNumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $firstTwoAlpha = 'C' . $alpha[random_int(0, 25)];
+    $nextFour = '';
+    for ($i = 0; $i < 4; $i++) {
+        $nextFour .= $alphaNumeric[random_int(0, 35)];
+    }
+    $lastTwoAlpha = $alpha[random_int(0, 25)] . $alpha[random_int(0, 25)];
+    return $firstTwoAlpha . $nextFour . $lastTwoAlpha;
+}
+
 
 
 if (isset($_POST['admin_new_pan_id_submit'])) {

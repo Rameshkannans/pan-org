@@ -320,7 +320,7 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
         </div>
     </div>
 
-  
+
     <?php
     $filePaths = [
         'new_profile_picture' => $fetched_new_pan_id['new_profile_picture'],
@@ -337,13 +337,15 @@ if (isset($_POST['admin_new_pan_id_submit'])) {
     }
     ?>
     <div class="my-5 d-flex gap-5">
-        <button class="btn btn-danger p-2" id="printButton">Print Details</button>
+        <button class="btn btn-danger rounded-0 p-2" id="printButton">Print Details</button>
         <form method="post" action="../forms_datas.php">
             <input type="hidden" name="recept" value="<?php echo $fetched_new_pan_id['new_pan_receipt_number']; ?>">
             <input type="hidden" name="name" value="<?php echo $fetched_new_pan_id['new_call_name']; ?>">
             <input type="hidden" name="filenames" value="<?php echo implode(', ', $baseNames); ?>">
-            <button type="submit" class="btn btn-warning p-2" name="download">Download Datas</button>
+            <button type="submit" class="btn btn-warning rounded-0 p-2" name="download">Download Datas</button>
         </form>
+        <a href="../New_Pan_Application/pan.php?download_App=<?php echo $fetched_new_pan_id['new_pan_id']; ?>"
+            target="_blank"> <button class="btn btn-info rounded-0 p-2">Download Application Form</button> </a>
     </div>
 
 

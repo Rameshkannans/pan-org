@@ -4,21 +4,26 @@
 
 
 add all file input unique name
-//watermark
 aadhar hidden *******12345
-//download documments in (automated download in download file)
-//camera frame
-frontend design
 
-//input heading
-//signature in mobile screen 
-//status checking
 favicon image 
-
 
 download form
 download datas in live
+form validaton back clear input
+
+signature crop backround REMOVE and size
+photo backround REMOVE
+
+success direct access page 
 
 
-female to father validation 
-sign validation
+next and previous page error use target="_value" (new page)
+
+system camera access only use selfi
+
+application form
+
+
+date format dd/mm/yyyy
+

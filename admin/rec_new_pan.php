@@ -1,9 +1,14 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['admin_reg_id'])) {
     header('Location: adminlogin.php');
     exit();
 }
+
+
+
+
 include '../server.php';
 $db = new Database();
 $fetched_new_pan = $db->select_new_pan_data();

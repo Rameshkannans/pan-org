@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #000;
+}
+
+
+  
+.borders{
+    border: 1px solid #000;
+    
+}
+.main-container{
+    border: 2px solid #000;
+    padding: 10px;
+    flex: 1 1 45%;
+    overflow: hidden;
+
+    
+}
+.styled-input {
+    width: 28px;
+    height: 30px;
+    margin: -1px;
+    border-radius: 0;
+    color: black;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+.styled-input:checked {
+    background-color: #686D76;
+    border: none;
+}
+
+.styled-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+

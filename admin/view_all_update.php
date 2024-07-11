@@ -166,10 +166,15 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
                                     target="_blank"><i class='bx bxs-image-alt'></i></a>
                             </div>
                             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                                <a class="btn btn-outline-primary" style="border-radius: 0%;"
+                                <img src="../<?php echo $fetched_update_pan_id['update_oldpan_doc']; ?>"
+                                    alt="Profile Photo" class="img-fluid my-2 rounded-2"
+                                    style="width: 100px; height: 100px;">
+                                <a class="btn btn-outline-warning mx-2 my-2"
+                                    href="../<?php echo $fetched_update_pan_id['update_oldpan_doc']; ?>" download><i
+                                        class='bx bx-download'></i></a>
+                                <a class="btn btn-outline-success"
                                     href="../<?php echo $fetched_update_pan_id['update_oldpan_doc']; ?>"
-                                    target="_blank">
-                                    Old PAN <i class='bx bx-download'></i></a>
+                                    target="_blank"><i class='bx bxs-image-alt'></i></a>
                             </div>
                             <!-- <div class="col-md-3 p-5 d-flex align-items-center justify-content-center">
                                 <a class="btn btn-outline-primary" style="border-radius: 0%;"
@@ -331,13 +336,16 @@ if (isset($_POST['admin_update_pan_id_submit'])) {
 
 
     <div class="my-5 d-flex gap-5">
-        <button class="btn btn-danger p-2" id="printButton">Print Details</button>
+        <button class="btn btn-danger rounded-0 p-2 " id="printButton">Print Details</button>
         <form method="post" action="../forms_datas.php">
-            <input type="hidden" name="recept" value="<?php echo $fetched_update_pan_id['update_pan_receipt_number']; ?>">
-            <input type="hidden" name="name" value="<?php echo  $fetched_update_pan_id['update_call_name']; ?>">
+            <input type="hidden" name="recept"
+                value="<?php echo $fetched_update_pan_id['update_pan_receipt_number']; ?>">
+            <input type="hidden" name="name" value="<?php echo $fetched_update_pan_id['update_call_name']; ?>">
             <input type="hidden" name="filenames" value="<?php echo implode(', ', $baseNames); ?>">
-            <button type="submit" class="btn btn-warning p-2" name="downloadUpdate">Download Datas</button>
+            <button type="submit" class="btn rounded-0 btn-warning p-2" name="downloadUpdate">Download Datas</button>
         </form>
+        <a href="../Update_Pan_Application/Newpan.php?download_App=<?php echo $fetched_update_pan_id['update_pan_id']; ?>"
+            target="_blank"> <button class="btn btn-info rounded-0 p-2">Download Application Form</button> </a>
     </div>
 
     <div class="container" id="content" style="display: none;">
